@@ -1,0 +1,16 @@
+apiVersion: v2
+name: pet-clinic
+description: A Helm chart for Pet Clinic app
+type: application
+version: 0.1.0
+appVersion: "1.0"
+
+dependencies:
+  - name: customer
+    version: 0.1.0
+    repository: "file://../service-common"
+    condition: customer.enabled
+  - name: vet
+    version: 0.1.0
+    repository: "file://../service-common"
+    condition: vet.enabled
