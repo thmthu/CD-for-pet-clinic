@@ -1,9 +1,9 @@
 dependencies:
-- name: customer
+- name: customers-service
   repository: file://../service-common
   version: 0.1.0
-- name: vet
+- name: vets-service
   repository: file://../service-common
   version: 0.1.0
-digest: sha256:4e7aeab931d07a6cc59d89e34c8261c19e22467e813fc0c495120de24d34fb0f
-generated: "2025-05-20T20:26:03.7682909+07:00"
+digest: sha256:5496f26728d0e7573dc5f22551f11529cbf6b54e93ddefa484a924fd20c5b7ec
+generated: "2025-05-21T04:14:29.6450523+07:00"
