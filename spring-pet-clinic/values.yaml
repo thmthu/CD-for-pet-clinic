@@ -1,5 +1,5 @@
-customer:
-  enabled: true
+customers-service:
+  enabled: false
   replicaCount: 1
 
   image:
@@ -30,8 +30,8 @@ customer:
       value: "false"
     - name: LOG_LEVEL
       value: info
-vet:
-  enabled: true
+vets-service:
+  enabled: false
   replicaCount: 1
 
   image:
