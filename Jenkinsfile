@@ -22,11 +22,11 @@ pipeline {
           // if (!services.contains(serviceInput)) {
           //   error "SERVICE_NAME không hợp lệ. Phải là 1 trong: ${services}"
           // }
-  
+
           // Lấy tag mới nhất nếu developer chọn 'newest'
           def tagToDeploy = deployTagInput
           if (deployTagInput == 'newest') {
-            tagToDeploy = getLatestTag(serviceInput)
+            tagToDeploy = '7c0f0d7'
           }
 
           echo "Deploying service '${serviceInput}' với tag: ${tagToDeploy}"
@@ -78,15 +78,15 @@ ${svc}:
   }
 }
 
-// Hàm lấy tag mới nhất từ DockerHub
-def getLatestTag(serviceName) {
-  def imageName = "${env.IMAGE_PREFIX}-${serviceName}"
-  def tagsJson = sh(
-    script: "curl -s https://hub.docker.com/v2/repositories/${env.DOCKERHUB_USER}/${imageName}/tags?page_size=100",
-    returnStdout: true
-  ).trim()
+// // Hàm lấy tag mới nhất từ DockerHub
+// def getLatestTag(serviceName) {
+//   def imageName = "${env.IMAGE_PREFIX}-${serviceName}"
+//   def tagsJson = sh(
+//     script: "curl -s https://hub.docker.com/v2/repositories/${env.DOCKERHUB_USER}/${imageName}/tags?page_size=100",
+//     returnStdout: true
+//   ).trim()
 
-  def results = new groovy.json.JsonSlurperClassic().parseText(tagsJson).results
-  def sorted = results.sort { a, b -> b.last_updated <=> a.last_updated }
-  return sorted ? sorted[0].name : "latest"
-}
+//   def results = new groovy.json.JsonSlurperClassic().parseText(tagsJson).results
+//   def sorted = results.sort { a, b -> b.last_updated <=> a.last_updated }
+//   return sorted ? sorted[0].name : "latest"
+// }
