@@ -19,10 +19,10 @@ pipeline {
           def serviceInput = params.SERVICE_NAME.trim()
           def deployTagInput = params.DEPLOY_TAG.trim()
 
-          if (!services.contains(serviceInput)) {
-            error "SERVICE_NAME không hợp lệ. Phải là 1 trong: ${services}"
-          }
-
+          // if (!services.contains(serviceInput)) {
+          //   error "SERVICE_NAME không hợp lệ. Phải là 1 trong: ${services}"
+          // }
+  
           // Lấy tag mới nhất nếu developer chọn 'newest'
           def tagToDeploy = deployTagInput
           if (deployTagInput == 'newest') {
