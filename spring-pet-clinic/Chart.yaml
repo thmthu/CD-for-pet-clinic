@@ -1,5 +1,5 @@
 apiVersion: v2
-name: pet-clinic
+name: spring-pet-clinic
 description: A Helm chart for Pet Clinic app
 type: application
 version: 0.1.0
