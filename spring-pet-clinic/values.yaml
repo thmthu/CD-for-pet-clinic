@@ -31,7 +31,7 @@ customers-service:
     - name: LOG_LEVEL
       value: info
 vets-service:
-  enabled: false
+  enabled: true
   replicaCount: 1
 
   image:
