@@ -22,6 +22,9 @@ visits:
           - path: /visits
             pathType: ImplementationSpecific
     tls: []
+  env:
+      - name: EUREKA_INSTANCE_HOSTNAME
+        value: petclinic-visits
 customers:
   enabled: true
   replicaCount: 1
@@ -30,7 +33,6 @@ customers:
     repository: mytruong28022004/spring-petclinic-customers-service
     pullPolicy: Always
     tag: "latest"
-
   service:
     type: ClusterIP
     port: 80
@@ -47,12 +49,8 @@ customers:
             pathType: ImplementationSpecific
     tls: []
   env:
-    - name: EUROKA
-      value: production
-    - name: DEBUG
-      value: "false"
-    - name: LOG_LEVEL
-      value: info
+    - name: EUREKA_INSTANCE_HOSTNAME
+      value: petclinic-customers
 vets:
   enabled: true
   replicaCount: 1
@@ -77,6 +75,9 @@ vets:
           - path: /vets
             pathType: ImplementationSpecific
     tls: []
+  env:
+      - name: EUREKA_INSTANCE_HOSTNAME
+        value: petclinic-vets
 
 admin:
   enabled: true
@@ -85,7 +86,7 @@ admin:
   image:
     repository: mytruong28022004/spring-petclinic-admin-server
     pullPolicy: Always
-    tag: "latest"
+    tag: "latest" 
 
   service:
     type: ClusterIP
@@ -104,12 +105,8 @@ admin:
     tls: []
 
   env:
-    - name: EUROKA
-      value: production
-    - name: DEBUG
-      value: "false"
-    - name: LOG_LEVEL
-      value: info
+    - name: EUREKA_INSTANCE_HOSTNAME
+      value: petclinic-admin
 
 gateway:
   enabled: true
@@ -137,13 +134,8 @@ gateway:
     tls: []
 
   env:
-    - name: EUROKA
-      value: production
-    - name: DEBUG
-      value: "false"
-    - name: LOG_LEVEL
-      value: info
-
+    - name: EUREKA_INSTANCE_HOSTNAME
+      value: petclinic-gateway
 config:
   enabled: true
   replicaCount: 1
@@ -166,12 +158,8 @@ config:
     tls: []
 
   env:
-    - name: EUROKA
-      value: production
-    - name: DEBUG
-      value: "false"
-    - name: LOG_LEVEL
-      value: info
+    - name: EUREKA_INSTANCE_HOSTNAME
+      value: petclinic-config
 
 discovery:
   enabled: true
@@ -195,9 +183,5 @@ discovery:
     tls: []
 
   env:
-    - name: EUROKA
-      value: production
-    - name: DEBUG
-      value: "false"
-    - name: LOG_LEVEL
-      value: info
+    - name: EUREKA_INSTANCE_HOSTNAME
+      value: petclinic-discovery
