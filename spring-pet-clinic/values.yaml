@@ -1,4 +1,4 @@
-customers-service:
+customers:
   enabled: false
   replicaCount: 1
 
@@ -30,7 +30,7 @@ customers-service:
       value: "false"
     - name: LOG_LEVEL
       value: info
-vets-service:
+vets:
   enabled: true
   replicaCount: 1
 

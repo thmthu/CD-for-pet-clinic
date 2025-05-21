@@ -70,8 +70,7 @@ ${svc}:
     stage('Deploy with Helm') {
       steps {
         sh """
-          helm dependency update spring-pet-clinic
-          helm upgrade --install petclinic spring-pet-clinic -f spring-pet-clinic/values.override.yaml
+          helm upgrade --install petclinic spring-pet-clinic -f spring-pet-clinic/values.yaml
         """
       }
     }
