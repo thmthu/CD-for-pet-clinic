@@ -9,7 +9,7 @@ visits:
 
   service:
     type: ClusterIP
-    port: 80
+    port: 8082
 
   ingress:
     enabled: true
@@ -19,7 +19,7 @@ visits:
     hosts:
       - host: spring-pet-clinic.dev
         paths:
-          - path: /visits
+          - path: /api/visit/**
             pathType: ImplementationSpecific
     tls: []
   env:
@@ -35,7 +35,7 @@ customers:
     tag: "latest"
   service:
     type: ClusterIP
-    port: 80
+    port: 8081
 
   ingress:
     enabled: true
@@ -45,7 +45,7 @@ customers:
     hosts:
       - host: spring-pet-clinic.dev
         paths:
-          - path: /customers
+          - path: /api/customer/**
             pathType: ImplementationSpecific
     tls: []
   env:
@@ -62,7 +62,7 @@ vets:
 
   service:
     type: ClusterIP
-    port: 80
+    port: 8083
 
   ingress:
     enabled: true
@@ -72,7 +72,7 @@ vets:
     hosts:
       - host: spring-pet-clinic.dev
         paths:
-          - path: /vets
+          - path: /api/vet/**
             pathType: ImplementationSpecific
     tls: []
   env:
@@ -90,7 +90,7 @@ admin:
 
   service:
     type: ClusterIP
-    port: 80
+    port: 9090
 
   ingress:
     enabled: true
@@ -119,7 +119,7 @@ gateway:
 
   service:
     type: ClusterIP
-    port: 80
+    port: 8080
 
   ingress:
     enabled: true
@@ -147,7 +147,7 @@ config:
 
   service:
     type: ClusterIP
-    port: 80
+    port: 8888
 
   ingress:
     enabled: false
@@ -172,7 +172,7 @@ discovery:
 
   service:
     type: ClusterIP
-    port: 80
+    port: 8761
 
   ingress:
     enabled: false
