@@ -1,0 +1,203 @@
+visits:
+  enabled: true
+  replicaCount: 1
+
+  image:
+    repository: mytruong28022004/spring-petclinic-visits-service
+    pullPolicy: Always
+    tag: "latest"
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: spring-pet-clinic.dev
+        paths:
+          - path: /visits
+            pathType: ImplementationSpecific
+    tls: []
+customers:
+  enabled: true
+  replicaCount: 1
+
+  image:
+    repository: mytruong28022004/spring-petclinic-customers-service
+    pullPolicy: Always
+    tag: "latest"
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: spring-pet-clinic.dev
+        paths:
+          - path: /customers
+            pathType: ImplementationSpecific
+    tls: []
+  env:
+    - name: EUROKA
+      value: production
+    - name: DEBUG
+      value: "false"
+    - name: LOG_LEVEL
+      value: info
+vets:
+  enabled: true
+  replicaCount: 1
+
+  image:
+    repository: mytruong28022004/spring-petclinic-vets-service
+    pullPolicy: Always
+    tag: "latest"
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: spring-pet-clinic.dev
+        paths:
+          - path: /vets
+            pathType: ImplementationSpecific
+    tls: []
+
+admin:
+  enabled: true
+  replicaCount: 1
+
+  image:
+    repository: mytruong28022004/spring-petclinic-admin-server
+    pullPolicy: Always
+    tag: "latest"
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: spring-pet-clinic.dev
+        paths:
+          - path: /admin
+            pathType: ImplementationSpecific
+    tls: []
+
+  env:
+    - name: EUROKA
+      value: production
+    - name: DEBUG
+      value: "false"
+    - name: LOG_LEVEL
+      value: info
+
+gateway:
+  enabled: true
+  replicaCount: 1
+
+  image:
+    repository: mytruong28022004/spring-petclinic-api-gateway
+    pullPolicy: Always
+    tag: "latest"
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: spring-pet-clinic.dev
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls: []
+
+  env:
+    - name: EUROKA
+      value: production
+    - name: DEBUG
+      value: "false"
+    - name: LOG_LEVEL
+      value: info
+
+config:
+  enabled: true
+  replicaCount: 1
+
+  image:
+    repository: mytruong28022004/spring-petclinic-config-server
+    pullPolicy: Always
+    tag: "latest"
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: false
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts: []
+    tls: []
+
+  env:
+    - name: EUROKA
+      value: production
+    - name: DEBUG
+      value: "false"
+    - name: LOG_LEVEL
+      value: info
+
+discovery:
+  enabled: true
+  replicaCount: 1
+
+  image:
+    repository: mytruong28022004/spring-petclinic-discovery-server
+    pullPolicy: Always
+    tag: "latest"
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: false
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts: []
+    tls: []
+
+  env:
+    - name: EUROKA
+      value: production
+    - name: DEBUG
+      value: "false"
+    - name: LOG_LEVEL
+      value: info

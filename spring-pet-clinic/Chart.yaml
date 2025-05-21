@@ -16,3 +16,28 @@ dependencies:
     repository: "file://../service-common"
     alias: vets
     condition: vets.enabled
+  - name: service-common
+    version: 0.1.0
+    repository: "file://../service-common"
+    alias: visits
+    condition: visits.enabled
+  - name: service-common
+    version: 0.1.0
+    repository: "file://../service-common"
+    alias: admin
+    condition: admin.enabled
+  - name: service-common
+    version: 0.1.0
+    repository: "file://../service-common"
+    alias: gateway
+    condition: gateway.enabled
+  - name: service-common
+    version: 0.1.0
+    repository: "file://../service-common"
+    alias: config
+    condition: config.enabled
+  - name: service-common
+    version: 0.1.0
+    repository: "file://../service-common"
+    alias: discovery
+    condition: discovery.enabled
