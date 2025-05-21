@@ -84,7 +84,7 @@ admin:
   replicaCount: 1
 
   image:
-    repository: mytruong28022004/spring-petclinic-config-server
+    repository: mytruong28022004/spring-petclinic-admin-server
     pullPolicy: Always
     tag: "latest" 
 
