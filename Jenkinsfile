@@ -43,11 +43,12 @@ pipeline {
 
           // Lấy tag mới nhất nếu developer chọn 'newest'
           sh "git clone https://github.com/thmthu/CD-for-pet-clinic.git"
-          dir("k8s_deploy") {
+          dir("CD-for-pet-clinic") {
+            echo "Đang ở trong thư mục CD-for-pet-clinic"
             sh "git fetch origin"
-            sh "git checkout ${branch}"
+            sh "git checkout ${branchBuildInput}"
             def commit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
-              echo "Latest commit on ${branch} is: ${commit}"
+              echo "Latest commit on ${branchBuildInput} is: ${commit}"
 
               env.LATEST_COMMIT = commit
           }
