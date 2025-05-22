@@ -31,7 +31,7 @@ pipeline {
       steps {
         script {
           def services = ['vets-service', 'customers-service', 'visits-service']
-
+          def branchs = env.BRANCH_LIST.split(',')
           def serviceInput = params.SERVICE_NAME.trim()
           def deployTagInput = params.DEPLOY_TAG.trim()
           def branchBuildInput = params.BRANCH_BUILD.trim()
@@ -42,6 +42,14 @@ pipeline {
           // }
 
           // Lấy tag mới nhất nếu developer chọn 'newest'
+          dir("k8s_deploy") {
+            sh "git fetch origin"
+            sh "git checkout ${branch}"
+            def commit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
+              echo "Latest commit on ${branch} is: ${commit}"
+
+              env.LATEST_COMMIT = commit
+          }
           def tagToDeploy = deployTagInput
           if (deployTagInput == 'newest') {
             tagToDeploy = '7c0f0d7'
