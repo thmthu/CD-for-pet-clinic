@@ -4,20 +4,38 @@ pipeline {
   parameters {
     string(name: 'SERVICE_NAME', defaultValue: '', description: 'Tên service muốn deploy, ví dụ vets-service, customers-service, visits-service')
     string(name: 'DEPLOY_TAG', defaultValue: 'main', description: 'Tag muốn deploy (newest để lấy tag mới nhất trên DockerHub)')
+    string(name: "BRANCH_BUILD", defaultValue: "main", description: "Branch muốn build")
+
   }
 
   environment {
     DOCKERHUB_USER = 'mytruong28022004'
     IMAGE_PREFIX = 'spring-petclinic'
   }
-
   stages {
+    stage('Get Branches') {
+      steps {
+        script {
+            def branches = sh(script: "git ls-remote --heads https://your-repo-url.git | awk '{print \$2}' | sed 's|refs/heads/||'", returnStdout: true)
+                        .trim()
+                        .split("\n")
+            echo "Branches: ${branches}"
+            branches.each { branch ->
+                        echo "Found branch: ${branch}"
+            }
+            env.BRANCH_LIST = branches.join(',')
+        }
+      }
+    }
     stage('Prepare Values Override') {
       steps {
         script {
           def services = ['vets-service', 'customers-service', 'visits-service']
+
           def serviceInput = params.SERVICE_NAME.trim()
           def deployTagInput = params.DEPLOY_TAG.trim()
+          def branchBuildInput = params.BRANCH_BUILD.trim()
+
 
           // if (!services.contains(serviceInput)) {
           //   error "SERVICE_NAME không hợp lệ. Phải là 1 trong: ${services}"
@@ -70,7 +88,7 @@ ${svc}:
     stage('Deploy with Helm') {
       steps {
         sh """
-          helm upgrade --install petclinic spring-pet-clinic -f spring-pet-clinic/values_dev.yaml -n dev \
+          helm upgrade --install petclinic spring-pet-clinic -f spring-pet-clinic/values.yaml
         """
       }
     }
