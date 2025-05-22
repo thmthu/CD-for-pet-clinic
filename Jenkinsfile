@@ -4,7 +4,10 @@ pipeline {
   parameters {
     string(name: 'SERVICE_NAME', defaultValue: '', description: 'Tên service muốn deploy, ví dụ vets-service, customers-service, visits-service')
     string(name: 'DEPLOY_TAG', defaultValue: 'main', description: 'Tag muốn deploy (newest để lấy tag mới nhất trên DockerHub)')
-    string(name: "BRANCH_BUILD", defaultValue: "main", description: "Branch muốn build")
+    string(name: "BRANCH_BUILD_FOR_VET", defaultValue: "main", description: "Branch muốn build")
+    string(name: "BRANCH_BUILD_FOR_CUSTOMER", defaultValue: "main", description: "Branch muốn build")
+    string(name: "BRANCH_BUILD_FOR_VISIT", defaultValue: "main", description: "Branch muốn build")
+    string 
 
   }
 
@@ -32,10 +35,19 @@ pipeline {
         script {
           def services = ['vets-service', 'customers-service', 'visits-service']
           def branchs = env.BRANCH_LIST.split(',')
+          def branchBuilds = [params.BRANCH_BUILD_FOR_VET, params.BRANCH_BUILD_FOR_CUSTOMER, params.BRANCH_BUILD_FOR_VISIT]
           def serviceInput = params.SERVICE_NAME.trim()
           def deployTagInput = params.DEPLOY_TAG.trim()
           def branchBuildInput = params.BRANCH_BUILD.trim()
+          def serviceBranchMap = [:]
+          // for (int i = 0; i < services.size(); i++) {
+          //     serviceBranchMap[services[i]] = branchs[i]
+          // }
 
+          // In ra để kiểm tra
+          serviceBranchMap.each { service, branch ->
+              echo "Service: ${service} => Branch: ${branch}"
+          }
 
           // if (!services.contains(serviceInput)) {
           //   error "SERVICE_NAME không hợp lệ. Phải là 1 trong: ${services}"
@@ -43,21 +55,27 @@ pipeline {
 
           // Lấy tag mới nhất nếu developer chọn 'newest'
           // sh "git clone https://github.com/thmthu/CD-for-pet-clinic.git"
-          if (branchs.contains(branchBuildInput)) {
-            branchBuildInput = branchBuildInput
-          } else {
-            branchBuildInput = 'main'
-          }
+          // if (branchs.contains(branchBuildInput)) {
+          //   branchBuildInput = branchBuildInput
+          // } else {
+          //   branchBuildInput = 'main'
+          // }
           dir("CD-for-pet-clinic") {
-            echo "Đang ở trong thư mục CD-for-pet-clinic"
-            sh "git fetch origin"
-            sh "git checkout ${branchBuildInput}"
-            def commit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
-              echo "Latest commit on ${branchBuildInput} is: ${commit}"
+          echo "Đang ở trong thư mục CD-for-pet-clinic"
+          def shortCommits = []
+          branchBuilds.each { branchName ->
+            if(branch == 'main') {
+              shortCommits.add("latest")
+            } else {
+              sh "git fetch origin"
+              sh "git checkout ${branchName}"
 
-              env.LATEST_COMMIT = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-              echo "Latest commit short hash: ${env.LATEST_COMMIT}"
+              def fullCommit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
+              def shortCommit = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+              shortCommits.add(shortCommit)
+            }
           }
+          echo "Các commit ngắn: ${shortCommits}"
           def tagToDeploy = deployTagInput
           if (branchBuildInput == 'main') {
             tagToDeploy = 'latest'
