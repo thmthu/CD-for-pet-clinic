@@ -43,6 +43,11 @@ pipeline {
 
           // Lấy tag mới nhất nếu developer chọn 'newest'
           // sh "git clone https://github.com/thmthu/CD-for-pet-clinic.git"
+          if (branchs.contains(branchBuildInput)) {
+            branchBuildInput = branchBuildInput
+          } else {
+            branchBuildInput = 'main'
+          }
           dir("CD-for-pet-clinic") {
             echo "Đang ở trong thư mục CD-for-pet-clinic"
             sh "git fetch origin"
@@ -50,11 +55,16 @@ pipeline {
             def commit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
               echo "Latest commit on ${branchBuildInput} is: ${commit}"
 
-              env.LATEST_COMMIT = commit
+              env.LATEST_COMMIT = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+              echo "Latest commit short hash: ${env.LATEST_COMMIT}"
           }
           def tagToDeploy = deployTagInput
-          if (deployTagInput == 'newest') {
-            tagToDeploy = '7c0f0d7'
+          if (branchBuildInput == 'main') {
+            tagToDeploy = 'latest'
+            echo "Deploying from main branch, using tag: ${tagToDeploy}"
+          }else {
+            tagToDeploy = "${env.LATEST_COMMIT}"
+            echo "Deploying from ${branchBuildInput} branch, using tag: ${tagToDeploy}"
           }
 
           echo "Deploying service '${serviceInput}' với tag: ${tagToDeploy}"
