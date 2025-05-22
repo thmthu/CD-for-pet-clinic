@@ -71,19 +71,23 @@ pipeline {
               sh "git checkout ${branchName}"
 
               def fullCommit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
-              def shortCommit = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+              def shortCommit = sh(script: 'git rev-parse --short=7 HEAD', returnStdout: true).trim()
+
               shortCommits.add(shortCommit)
             }
           }
-          echo "Các commit ngắn: ${shortCommits}"
-          def tagToDeploy = deployTagInput
-          if (branchBuildInput == 'main') {
-            tagToDeploy = 'latest'
-            echo "Deploying from main branch, using tag: ${tagToDeploy}"
-          }else {
-            tagToDeploy = "${env.LATEST_COMMIT}"
-            echo "Deploying from ${branchBuildInput} branch, using tag: ${tagToDeploy}"
+          echo "short commits: ${shortCommits}"
+          for (int i = 0; i < services.size(); i++) {
+              serviceBranchMap[services[i]] = shortCommits[i]
           }
+          def tagToDeploy = deployTagInput
+          // if (branchBuildInput == 'main') {
+          //   tagToDeploy = 'latest'
+          //   echo "Deploying from main branch, using tag: ${tagToDeploy}"
+          // }else {
+          //   tagToDeploy = "${env.LATEST_COMMIT}"
+          //   echo "Deploying from ${branchBuildInput} branch, using tag: ${tagToDeploy}"
+          // }
 
           echo "Deploying service '${serviceInput}' với tag: ${tagToDeploy}"
 
@@ -92,7 +96,7 @@ pipeline {
 
           services.each { svc ->
             if (svc == serviceInput) {
-              if (tagToDeploy == 'main') {
+              if (tagToDeploy == serviceBranchMap[svc]) {
                 // Nếu tag là main thì tắt deploy (hoặc bạn có thể enable mà dùng tag main)
                 overrideYaml += """
 ${svc}:
@@ -105,7 +109,7 @@ ${svc}:
   enabled: true
   image:
     repository: ${DOCKERHUB_USER}/${IMAGE_PREFIX}-${svc}
-    tag: ${tagToDeploy}
+    tag: ${serviceBranchMap[svc]}
 """
               }
             } else {
