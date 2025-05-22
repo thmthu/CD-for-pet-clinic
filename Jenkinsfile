@@ -42,7 +42,7 @@ pipeline {
           // }
 
           // Lấy tag mới nhất nếu developer chọn 'newest'
-          sh "git clone https://github.com/thmthu/CD-for-pet-clinic.git"
+          // sh "git clone https://github.com/thmthu/CD-for-pet-clinic.git"
           dir("CD-for-pet-clinic") {
             echo "Đang ở trong thư mục CD-for-pet-clinic"
             sh "git fetch origin"
