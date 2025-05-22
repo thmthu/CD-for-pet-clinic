@@ -42,6 +42,7 @@ pipeline {
           // }
 
           // Lấy tag mới nhất nếu developer chọn 'newest'
+          sh "git clone https://github.com/thmthu/CD-for-pet-clinic.git"
           dir("k8s_deploy") {
             sh "git fetch origin"
             sh "git checkout ${branch}"
