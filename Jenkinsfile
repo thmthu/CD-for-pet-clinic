@@ -121,7 +121,7 @@ ${svc}:
           // Run the Helm deployment with the namespace
           sh """
             helm upgrade --install petclinic spring-pet-clinic \
-              -f spring-pet-clinic/values_devCD.yaml \
+              -f spring-pet-clinic/values_dev2.yaml \
               -n dev --create-namespace
           """
         }
