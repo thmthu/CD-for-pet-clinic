@@ -108,9 +108,18 @@ ${svc}:
 
     stage('Deploy with Helm') {
       steps {
-        sh """
-          helm upgrade --install petclinic spring-pet-clinic -f spring-pet-clinic/values_devCD.yaml -n ${shortCommit} --create-namespace
-        """
+        script {
+          // Get the short Git commit hash
+          def shortCommit = sh(script: 'git rev-parse --short=7 HEAD', returnStdout: true).trim()
+          echo "Short commit hash: ${shortCommit}"
+
+          // Run the Helm deployment with the namespace
+          sh """
+            helm upgrade --install petclinic spring-pet-clinic \
+              -f spring-pet-clinic/values_devCD.yaml \
+              -n ${shortCommit} --create-namespace
+          """
+        }
       }
     }
 
