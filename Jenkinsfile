@@ -12,8 +12,8 @@ pipeline {
   environment {
     DOCKERHUB_USER = 'mytruong28022004'
     IMAGE_PREFIX = 'spring-petclinic'
+    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml"
   }
-  
   
   stages {
     stage('Get Branches') {
@@ -27,18 +27,9 @@ pipeline {
             echo "Found branch: ${branch}"
           }
           env.BRANCH_LIST = branches.join(',')
-          def branches = sh(script: "git ls-remote --heads https://github.com/thmthu/CD-for-pet-clinic.git | awk '{print \$2}' | sed 's|refs/heads/||'", returnStdout: true)
-                      .trim()
-                      .split("\n")
-          echo "Branches: ${branches}"
-          branches.each { branch ->
-            echo "Found branch: ${branch}"
-          }
-          env.BRANCH_LIST = branches.join(',')
         }
       }
     }
-    
     
     stage('Prepare Values Override') {
       steps {
@@ -51,7 +42,6 @@ pipeline {
           def serviceBranchMap = [:]
 
           serviceBranchMap.each { service, branch ->
-            echo "Service: ${service} => Branch: ${branch}"
             echo "Service: ${service} => Branch: ${branch}"
           }
 
@@ -67,15 +57,7 @@ pipeline {
 
                 def fullCommit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
                 def shortCommit = sh(script: 'git rev-parse --short=7 HEAD', returnStdout: true).trim()
-                def fullCommit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
-                def shortCommit = sh(script: 'git rev-parse --short=7 HEAD', returnStdout: true).trim()
 
-                shortCommits.add(shortCommit)
-              }
-            }
-            
-            echo "short commits: ${shortCommits}"
-            for (int i = 0; i < services.size(); i++) {
                 shortCommits.add(shortCommit)
               }
             }
@@ -87,21 +69,10 @@ pipeline {
             
             def tagToDeploy = deployTagInput  
             echo "Deploying service '${serviceInput}' với tag: ${tagToDeploy}"
-            }
-            
-            def tagToDeploy = deployTagInput  
-            echo "Deploying service '${serviceInput}' với tag: ${tagToDeploy}"
 
             // Tạo nội dung override.yaml
             def overrideYaml = ""
-            // Tạo nội dung override.yaml
-            def overrideYaml = ""
 
-            services.each { svc ->
-              if (svc == serviceInput) {
-                if (tagToDeploy == serviceBranchMap[svc]) {
-                  // Nếu tag là main thì tắt deploy
-                  overrideYaml += """
             services.each { svc ->
               if (svc == serviceInput) {
                 if (tagToDeploy == serviceBranchMap[svc]) {
@@ -110,9 +81,6 @@ pipeline {
 ${svc}:
   enabled: false
 """
-                } else {
-                  // Enable và set tag cho service muốn deploy
-                  overrideYaml += """
                 } else {
                   // Enable và set tag cho service muốn deploy
                   overrideYaml += """
@@ -126,21 +94,12 @@ ${svc}:
               } else {
                 // Các service khác disable
                 overrideYaml += """
-                }
-              } else {
-                // Các service khác disable
-                overrideYaml += """
 ${svc}:
   enabled: false
 """
               }
             }
-              }
-            }
 
-            writeFile file: "spring-pet-clinic/values_devCD.override.yaml", text: overrideYaml.trim()
-            echo "Generated values_devCD.override.yaml:\n${overrideYaml}"
-          }
             writeFile file: "spring-pet-clinic/values_devCD.override.yaml", text: overrideYaml.trim()
             echo "Generated values_devCD.override.yaml:\n${overrideYaml}"
           }
@@ -150,11 +109,31 @@ ${svc}:
 
     stage('Deploy with Helm') {
       steps {
-        sh """
-          export KUBECONFIG=/etc/rancher/k3s/k3s.yaml 
-          helm upgrade --install petclinic spring-pet-clinic -f spring-pet-clinic/values_devCD.yaml -n dev-cd --create-namespace
-        """
+        script {
+          // Get the short Git commit hash
+          def shortCommit = sh(script: 'git rev-parse --short=7 HEAD', returnStdout: true).trim()
+          echo "Short commit hash: ${shortCommit}"
+
+          // Run the Helm deployment with the namespace
+          sh """
+            helm upgrade --install petclinic spring-pet-clinic \
+              -f spring-pet-clinic/values_devCD.yaml \
+              -n ${shortCommit} --create-namespace
+          """
+        }
       }
     }
+
+    stage('Deployment Link') {
+      steps {
+        script {
+          def link = "http://spring-pet-clinic.local"
+
+          echo "🟢 [View Deployed Service](${link})"
+          currentBuild.description = "[${link}](${link})"
+        }
+      }
+    }
+
   }
 }
