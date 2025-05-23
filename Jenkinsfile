@@ -15,6 +15,7 @@ pipeline {
     IMAGE_PREFIX = 'spring-petclinic'
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml"
     JENKINS_URL= "http://35.209.75.248:8080/"
+    VALUES_FILE = "values_devCD.yaml"
   }
   
   stages {
@@ -116,6 +117,27 @@ ${svc}:
             writeFile file: "spring-pet-clinic/values_devCD.override.yaml", text: overrideYaml.trim()
             echo "Generated values_devCD.override.yaml:\n${overrideYaml}"
           }
+        }
+      }
+    }
+
+    stage('Update Hosts in values.yaml') {
+      steps {
+        script {
+                    // Cập nhật gateway ingress host
+          sh """
+            yq e '
+              .gateway.ingress.hosts[0].host = "spring-pet-clinic-dev-${env.COMMIT}.local"
+              ' -i ${VALUES_FILE}
+            """
+
+                    // Cập nhật admin ingress host
+          sh """
+            yq e '
+              .admin.ingress.hosts[0].host = "spring-pet-clinic-dev-${env.COMMIT}-server.local"
+              ' -i ${VALUES_FILE}
+            """
+          echo "Updated ingress hosts with commit ID ${env.COMMIT}"
         }
       }
     }
