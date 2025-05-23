@@ -100,7 +100,7 @@ admin:
       - host: spring-pet-clinic.local
         paths:
           - path: /admin
-            pathType: Prefix
+            pathType: ImplementationSpecific
     tls: []
 
   env:
@@ -133,7 +133,7 @@ gateway:
       - host: spring-pet-clinic.local
         paths:
           - path: /
-            pathType: Prefix
+            pathType: ImplementationSpecific
     tls: []
   env:
     - name: SPRING_PROFILES_ACTIVE
