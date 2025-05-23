@@ -127,10 +127,10 @@ ${svc}:
     stage('Deployment Link') {
       steps {
         script {
-          def link = "spring-pet-clinic.local"
+          def link = "http://spring-pet-clinic.local"
 
           echo "🟢 [View Deployed Service](${link})"
-          currentBuild.description = "<a href='${link}' target='_blank'>${link}</a>"
+          currentBuild.description = "[${link}](${link})"
         }
       }
     }
