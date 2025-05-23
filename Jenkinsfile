@@ -124,22 +124,16 @@ ${svc}:
     stage('Update Hosts in values.yaml') {
       steps {
         script {
-                    // Cập nhật gateway ingress host
-          sh """
-            yq e '
-              .gateway.ingress.hosts[0].host = "spring-pet-clinic-dev-${env.COMMIT}.local"
-              ' -i ${VALUES_FILE}
-            """
 
-                    // Cập nhật admin ingress host
-          sh """
-            def newGatewayHost = "spring-pet-clinic-dev-${env.COMMIT}.local"
-            def newAdminHost = "spring-pet-clinic-dev-${env.COMMIT}-server.local"
+          def newGatewayHost = "spring-pet-clinic-dev-${env.COMMIT}.local"
+          def newAdminHost = "spring-pet-clinic-dev-${env.COMMIT}-server.local"
 
-            sh """
-              sed -i "s|host:.*spring-pet-clinic-dev.*\\.local|host: ${newGatewayHost}|" ${VALUES_FILE}
-              sed -i "s|host:.*spring-pet-clinic-dev.*-server\\.local|host: ${newAdminHost}|" ${VALUES_FILE}
-            """
+          sh '''
+            newGatewayHost="spring-pet-clinic-dev-${COMMIT}.local"
+            newAdminHost="spring-pet-clinic-dev-${COMMIT}-server.local"
+            sed -i "s|host:.*spring-pet-clinic-dev.*\\.local|host: ${newGatewayHost}|" ${VALUES_FILE}
+            sed -i "s|host:.*spring-pet-clinic-dev.*-server\\.local|host: ${newAdminHost}|" ${VALUES_FILE}
+          '''
 
             sh "cat ${VALUES_FILE}"
 
