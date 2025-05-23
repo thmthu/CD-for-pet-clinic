@@ -136,13 +136,13 @@ ${svc}:
         }
       }
     }
-    stage('Show Cleanup Link') {
+    stage('Delete Link') {
       steps {
         script {
-          def deleteJobUrl = "${env.JENKINS_URL}/job/delete_dev_release/buildWithParameters?RELEASE_NAME=${params.RELEASE_NAME}&NAMESPACE=devbuild"
-          echo "Click here to delete the deployed release:"
-          echo "<a href='${deleteJobUrl}'>Delete this release</a>"
-          currentBuild.description = "<a href='${deleteJobUrl}'>[Click to delete release ${params.RELEASE_NAME}]</a>"
+          def link = "http://spring-pet-clinic.local"
+
+          echo "🔴 [Delete Deployed Service](${link})"
+          currentBuild.description = "[${link}](${link})"
         }
       }
     }
