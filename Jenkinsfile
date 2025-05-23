@@ -128,12 +128,10 @@ ${svc}:
           def newGatewayHost = "spring-pet-clinic-dev-${env.COMMIT}.local"
           def newAdminHost = "spring-pet-clinic-dev-${env.COMMIT}-server.local"
 
-          sh '''
-            newGatewayHost="spring-pet-clinic-dev-${COMMIT}.local"
-            newAdminHost="spring-pet-clinic-dev-${COMMIT}-server.local"
-            sed -i "s|host:.*spring-pet-clinic-dev.*\\.local|host: ${newGatewayHost}|" ${VALUES_FILE}
-            sed -i "s|host:.*spring-pet-clinic-dev.*-server\\.local|host: ${newAdminHost}|" ${VALUES_FILE}
-          '''
+          sh """
+            sed -i 's|host:.*spring-pet-clinic.*\\.local|host: ${newGatewayHost}|' ${VALUES_FILE}
+            sed -i 's|host:.*spring-pet-clinic-admin.*-server\\.local|host: ${newAdminHost}|' ${VALUES_FILE}
+          """
 
             sh "cat ${VALUES_FILE}"
 
