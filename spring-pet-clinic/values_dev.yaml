@@ -204,7 +204,7 @@ admin:
     annotations:
       kubernetes.io/ingress.class: traefik
     hosts:
-      - host: spring-pet-clinic-admin.local
+      - host: spring-pet-clinic-dev-admin.local
         paths:
           - path: /
             pathType: ImplementationSpecific
@@ -266,7 +266,7 @@ gateway:
     annotations:
       kubernetes.io/ingress.class: traefik
     hosts:
-      - host: spring-pet-clinic.local
+      - host: spring-pet-clinic-dev.local
         paths:
           - path: /
             pathType: ImplementationSpecific
