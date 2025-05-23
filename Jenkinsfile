@@ -124,9 +124,11 @@ ${svc}:
     stage('Update Hosts in values.yaml') {
       steps {
         script {
-          def commit=${env.COMMIT:="main"}
-          def newGatewayHost = "spring-pet-clinic-dev-${commit}.local"
-          def newAdminHost = "spring-pet-clinic-dev-${commit}-server.local"
+          if(!env.COMMIT){
+            env.COMMIT = "main"
+          }
+          def newGatewayHost = "spring-pet-clinic-dev-${env.COMMIT}.local"
+          def newAdminHost = "spring-pet-clinic-dev-${env.COMMIT}-server.local"
 
           sh """
             sed -i 's|host:.*spring-pet-clinic.*\\.local|host: ${newGatewayHost}|' spring-pet-clinic/${VALUES_FILE}
@@ -135,7 +137,7 @@ ${svc}:
 
             sh "cat spring-pet-clinic/${VALUES_FILE}"
 
-          echo "Updated ingress hosts with commit ID ${commit}"
+          echo "Updated ingress hosts with commit ID ${env.COMMIT}"
         }
       }
     }
