@@ -46,9 +46,9 @@ pipeline {
           serviceBranchMap.each { service, branch ->
             echo "Service: ${service} => Branch: ${branch}"
           }
-
-          dir("CD-for-pet-clinic") {
-            echo "Đang ở trong thư mục CD-for-pet-clinic"
+          sh "git clone https://github.com/MyTruong28022004/spring-petclinic-microservices-fork.git"
+          dir("spring-petclinic-microservices-fork") {
+            echo "Đang ở trong thư mục spring-petclinic-microservices-fork"
             def shortCommits = []
             branchBuilds.each { branchName ->
               if (branchName == 'main') {
