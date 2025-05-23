@@ -15,7 +15,6 @@ pipeline {
     IMAGE_PREFIX = 'spring-petclinic'
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml"
     JENKINS_URL= "http://35.209.75.248:8080/"
-    VALUES_FILE = "values_devCD.yaml"
   }
   
   stages {
@@ -70,10 +69,6 @@ pipeline {
             echo "short commits: ${shortCommits}"
             for (int i = 0; i < services.size(); i++) {
               serviceBranchMap[services[i]] = shortCommits[i]
-              if(commitId != 'latest') {
-                env.COMMIT_ID = shortCommits[i]
-              }
-               
             }
             
             def tagToDeploy = deployTagInput  
@@ -121,25 +116,5 @@ ${svc}:
         }
       }
     }
-    stage('Update Hosts in values.yaml') {
-      steps {
-        script {
-          sh """
-              yq e '
-              .gateway.ingress.hosts[0].host = "spring-pet-clinic-dev-${env.COMMIT_ID}.local"
-              ' -i ${VALUES_FILE}
-              """
-
-                    // Cập nhật admin ingress host
-                    sh """
-                        yq e '
-                          .admin.ingress.hosts[0].host = "spring-pet-clinic-dev-${env.COMMIT_ID}-server.local"
-                        ' -i ${VALUES_FILE}
-                    """
-
-                    echo "Updated ingress hosts with commit ID ${env.COMMIT_ID}"
-                }
-            }
-        }
   }
 }
