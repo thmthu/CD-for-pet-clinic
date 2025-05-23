@@ -46,6 +46,7 @@ pipeline {
           serviceBranchMap.each { service, branch ->
             echo "Service: ${service} => Branch: ${branch}"
           }
+          sh 'rm -rf spring-petclinic-microservices-fork'
           sh "git clone https://github.com/MyTruong28022004/spring-petclinic-microservices-fork.git"
           dir("spring-petclinic-microservices-fork") {
             echo "Đang ở trong thư mục spring-petclinic-microservices-fork"
@@ -58,6 +59,7 @@ pipeline {
                 sh "git checkout ${branchName}"
 
                 def fullCommit = sh(script: "git rev-parse HEAD", returnStdout: true).trim()
+                echo "Full commit hash: ${fullCommit}"
                 def shortCommit = sh(script: 'git rev-parse --short=7 HEAD', returnStdout: true).trim()
 
                 shortCommits.add(shortCommit)
