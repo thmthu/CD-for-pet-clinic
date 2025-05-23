@@ -69,11 +69,14 @@ pipeline {
             echo "short commits: ${shortCommits}"
             for (int i = 0; i < services.size(); i++) {
               serviceBranchMap[services[i]] = shortCommits[i]
+              if(shortCommits[i] != "latest"){
+                env.COMMIT = shortCommits[i]
+              }
             }
             
             def tagToDeploy = deployTagInput  
             echo "Deploying service '${serviceInput}' với tag: ${tagToDeploy}"
-
+            echo "commit: ${env.COMMIT}"
             // Tạo nội dung override.yaml
             def overrideYaml = ""
 
