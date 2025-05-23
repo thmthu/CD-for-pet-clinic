@@ -1,6 +1,25 @@
 visits:
   enabled: true
   replicaCount: 1
+  livenessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8081
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8081
+    initialDelaySeconds: 90
+    periodSeconds: 10
+  startupProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8081
+    failureThreshold: 30
+    periodSeconds: 10
   fullnameOverride: visits-service
   image:
     repository: mytruong28022004/spring-petclinic-visits-service
@@ -25,6 +44,25 @@ visits:
 customers:
   enabled: true
   replicaCount: 1
+  livenessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8081
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8081
+    initialDelaySeconds: 90
+    periodSeconds: 10
+  startupProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8081
+    failureThreshold: 30
+    periodSeconds: 10
   fullnameOverride: customers-service
   image:
     repository: mytruong28022004/spring-petclinic-customers-service
@@ -49,7 +87,25 @@ vets:
   enabled: true
   replicaCount: 1
   fullnameOverride: vets-service
-
+  livenessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8081
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8081
+    initialDelaySeconds: 90
+    periodSeconds: 10
+  startupProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8081
+    failureThreshold: 30
+    periodSeconds: 10
   image:
     repository: mytruong28022004/spring-petclinic-vets-service
     pullPolicy: Always
@@ -72,7 +128,7 @@ vets:
         value: http://tracing-server:9411
 
 admin:
-  enabled: true
+  enabled: false
   replicaCount: 1
   fullnameOverride: admin-server
   image:
@@ -83,17 +139,16 @@ admin:
   service:
     type: ClusterIP
     port: 9090
-
   ingress:
     enabled: true
-    className: "nginx"
+    className: "traefik"
     annotations:
-      kubernetes.io/ingress.class: nginx
+      kubernetes.io/ingress.class: traefik
     hosts:
-      - host: spring-pet-clinic-mnk.local
+      - host: spring-pet-clinic.local
         paths:
           - path: /admin
-            pathType: Prefix
+            pathType: ImplementationSpecific
     tls: []
 
   env:
@@ -105,6 +160,7 @@ admin:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://tracing-server:9411
+
 gateway:
   enabled: true 
   replicaCount: 1
@@ -118,14 +174,14 @@ gateway:
     port: 8080
   ingress:
     enabled: true
-    className: "nginx"
+    className: "traefik"
     annotations:
-      kubernetes.io/ingress.class: nginx
+      kubernetes.io/ingress.class: traefik
     hosts:
-      - host: spring-pet-clinic-mnk.local
+      - host: spring-pet-clinic.local
         paths:
           - path: /
-            pathType: Prefix
+            pathType: ImplementationSpecific
     tls: []
   env:
     - name: SPRING_PROFILES_ACTIVE
