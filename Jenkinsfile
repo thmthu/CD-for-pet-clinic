@@ -162,8 +162,10 @@ ${svc}:
         script {
 
           echo "🟢 [View Deployed Service]"
-          currentBuild.description = "<a href='${env.gatewayHost}' target='_blank'>${env.gatewayHost}</a>
-          <a href='${env.adminHost}' target='_blank'>${env.adminHost}</a>"
+          currentBuild.description = """
+          <a href='${env.gatewayHost}' target='_blank'>${env.gatewayHost}</a><br>
+          <a href='${env.adminHost}' target='_blank'>${env.adminHost}</a>
+        """
         }
       }
     }
