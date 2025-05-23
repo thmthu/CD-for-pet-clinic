@@ -178,3 +178,26 @@ discovery:
       value: http://config-server:8888
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
+tracing:
+  enabled: true
+  replicaCount: 1
+  fullnameOverride: tracing-server
+  image:
+    repository: openzipkin/zipkin
+    pullPolicy: Always
+    tag: "latest"
+
+  service:
+    type: ClusterIP
+    port: 9411
+
+  ingress:
+    enabled: false
+
+  env:
+    - name: EUREKA_INSTANCE_HOSTNAME
+      value: tracing-server
+    - name: CONFIG_SERVER_URL
+      value: http://config-server:8888
+    - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+      value: http://discovery-server:8761/eureka/
