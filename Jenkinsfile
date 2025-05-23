@@ -133,7 +133,7 @@ ${svc}:
             sed -i 's|host:.*spring-pet-clinic-admin.*-server\\.local|host: ${newAdminHost}|' spring-pet-clinic/${VALUES_FILE}
           """
 
-            sh "cat vets-service,${VALUES_FILE}"
+            sh "cat spring-pet-clinic/${VALUES_FILE}"
 
           echo "Updated ingress hosts with commit ID ${env.COMMIT}"
         }
