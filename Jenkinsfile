@@ -84,6 +84,9 @@ pipeline {
                   overrideYaml += """
 ${svc}:
   enabled: true
+  image:
+    repository: ${DOCKERHUB_USER}/${IMAGE_PREFIX}-${svc}
+    tag: ${serviceBranchMap[svc]}
 """
                 } else {
                   // Enable và set tag cho service muốn deploy
@@ -100,6 +103,9 @@ ${svc}:
                 overrideYaml += """
 ${svc}:
   enabled: true
+  image:
+    repository: ${DOCKERHUB_USER}/${IMAGE_PREFIX}-${svc}
+    tag: ${serviceBranchMap[svc]}
 """
               }
             }
