@@ -12,6 +12,7 @@ pipeline {
   environment {
     DOCKERHUB_USER = 'mytruong28022004'
     IMAGE_PREFIX = 'spring-petclinic'
+    KUBECONFIG = "/etc/rancher/k3s/k3s.yaml"
   }
   
   stages {
@@ -114,9 +115,6 @@ ${svc}:
           echo "Short commit hash: ${shortCommit}"
 
           // Run the Helm deployment with the namespace
-          sh """
-          export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-          """
           sh """
             helm upgrade --install petclinic spring-pet-clinic \
               -f spring-pet-clinic/values_devCD.yaml \
