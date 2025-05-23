@@ -1,5 +1,5 @@
 visits:
-  enabled: false
+  enabled: true
   replicaCount: 1
   livenessProbe:
     httpGet:
@@ -42,7 +42,7 @@ visits:
       - name: SPRING_ZIPKIN_BASE_URL
         value: http://tracing-server:9411
 customers:
-  enabled: false
+  enabled: true
   replicaCount: 1
   livenessProbe:
     httpGet:
@@ -84,7 +84,7 @@ customers:
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://tracing-server:9411
 vets:
-  enabled: false
+  enabled: true
   replicaCount: 1
   fullnameOverride: vets-service
   livenessProbe:
@@ -162,7 +162,7 @@ admin:
       value: http://tracing-server:9411
 
 gateway:
-  enabled: false 
+  enabled: true 
   replicaCount: 1
   fullnameOverride: api-gateway
   image:
