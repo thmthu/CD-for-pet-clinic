@@ -269,3 +269,4 @@ tracing:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://tracing-server:9411
+      
