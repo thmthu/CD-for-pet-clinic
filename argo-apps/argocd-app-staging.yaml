@@ -1,0 +1,23 @@
+apiVersion: agrocd.io/v1alpha1
+kind: Application
+metadata:
+  name: spring-pet-clinic-staging
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/thmthu/CD-for-pet-clinic'
+    targetRevision: HEAD
+    path: spring-pet-clinic
+    helm:
+      valueFiles:
+        - values_dev.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
