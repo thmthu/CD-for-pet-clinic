@@ -4,20 +4,20 @@ visits:
   livenessProbe:
     httpGet:
       path: /actuator/health
-      port: 8081
+      port: 8082
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
   readinessProbe:
     httpGet:
       path: /actuator/health
-      port: 8081
+      port: 8082
     initialDelaySeconds: 90
     periodSeconds: 10
   startupProbe:
     httpGet:
       path: /actuator/health
-      port: 8081
+      port: 8082
     failureThreshold: 30
     periodSeconds: 10
   fullnameOverride: visits-service
@@ -87,20 +87,20 @@ vets:
   livenessProbe:
     httpGet:
       path: /actuator/health
-      port: 8081
+      port: 8083
     initialDelaySeconds: 120
     periodSeconds: 30
     failureThreshold: 3
   readinessProbe:
     httpGet:
       path: /actuator/health
-      port: 8081
+      port: 8083
     initialDelaySeconds: 90
     periodSeconds: 10
   startupProbe:
     httpGet:
       path: /actuator/health
-      port: 8081
+      port: 8083
     failureThreshold: 30
     periodSeconds: 10
   image:
@@ -122,7 +122,7 @@ vets:
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://tracing-server:9411
 admin:
-  enabled: false
+  enabled: true
   replicaCount: 1
   fullnameOverride: admin-server
   image:
@@ -138,9 +138,9 @@ admin:
     annotations:
       kubernetes.io/ingress.class: traefik
     hosts:
-      - host: spring-pet-clinic.local
+      - host: spring-pet-clinic-admin.local
         paths:
-          - path: /admin
+          - path: /
             pathType: ImplementationSpecific
     tls: []
   env:
