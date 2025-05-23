@@ -141,41 +141,5 @@ ${svc}:
                 }
             }
         }
-    stage('Deploy with Helm') {
-      steps {
-        script {
-          // Get the short Git commit hash
-          def shortCommit = sh(script: 'git rev-parse --short=7 HEAD', returnStdout: true).trim()
-          echo "Short commit hash: ${shortCommit}"
-
-          // Run the Helm deployment with the namespace
-          sh """
-            helm upgrade --install petclinic spring-pet-clinic \
-              -f spring-pet-clinic/values_devCD.yaml \
-              -n dev --create-namespace
-          """
-        }
-      }
-    }
-    stage('Deployment Link') {
-      steps {
-        script {
-          def link = "http://spring-pet-clinic.local"
-
-          echo "🟢 [View Deployed Service](${link})"
-          currentBuild.description = "[${link}](${link})"
-        }
-      }
-    }
-    stage('Delete Link') {
-      steps {
-        script {
-          def link = "http://spring-pet-clinic.local"
-
-          echo "🔴 [Delete Deployed Service](${link})"
-          currentBuild.description = "[${link}](${link})"
-        }
-      }
-    }
   }
 }
