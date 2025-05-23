@@ -137,6 +137,8 @@ ${svc}:
               .admin.ingress.hosts[0].host = "spring-pet-clinic-dev-${env.COMMIT}-server.local"
               ' -i ${VALUES_FILE}
             """
+            sh "cat ${VALUES_FILE}"
+
           echo "Updated ingress hosts with commit ID ${env.COMMIT}"
         }
       }
