@@ -7,7 +7,7 @@ pipeline {
     string(name: "BRANCH_BUILD_FOR_VET", defaultValue: "main", description: "Branch muốn build")
     string(name: "BRANCH_BUILD_FOR_CUSTOMER", defaultValue: "main", description: "Branch muốn build")
     string(name: "BRANCH_BUILD_FOR_VISIT", defaultValue: "main", description: "Branch muốn build")
-    string 
+  
 
   }
 
