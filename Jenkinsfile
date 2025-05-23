@@ -124,7 +124,7 @@ ${svc}:
     stage('Update Hosts in values.yaml') {
       steps {
         script {
-          def commit = env.COMMIT | "main"
+          def commit=${env.COMMIT:="main"}
           def newGatewayHost = "spring-pet-clinic-dev-${commit}.local"
           def newAdminHost = "spring-pet-clinic-dev-${commit}-server.local"
 
