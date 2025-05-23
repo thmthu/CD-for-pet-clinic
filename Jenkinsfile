@@ -7,12 +7,14 @@ pipeline {
     string(name: "BRANCH_BUILD_FOR_VET", defaultValue: "main", description: "Branch muốn build")
     string(name: "BRANCH_BUILD_FOR_CUSTOMER", defaultValue: "main", description: "Branch muốn build")
     string(name: "BRANCH_BUILD_FOR_VISIT", defaultValue: "main", description: "Branch muốn build")
+    string(name: 'RELEASE_NAME', defaultValue: 'dev', description: 'Tên release muốn deploy')
   }
 
   environment {
     DOCKERHUB_USER = 'mytruong28022004'
     IMAGE_PREFIX = 'spring-petclinic'
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml"
+    JENKINS_URL= "http://35.209.75.248:8080/"
   }
   
   stages {
@@ -134,13 +136,13 @@ ${svc}:
         }
       }
     }
-    stage('Delete Link') {
+    stage('Show Cleanup Link') {
       steps {
         script {
-          def link = "http://spring-pet-clinic.local"
-
-          echo "🔴 [Delete Deployed Service](${link})"
-          currentBuild.description = "[${link}](${link})"
+          def deleteJobUrl = "${env.JENKINS_URL}/job/delete_dev_release/buildWithParameters?RELEASE_NAME=${params.RELEASE_NAME}&NAMESPACE=devbuild"
+          echo "Click here to delete the deployed release:"
+          echo "<a href='${deleteJobUrl}'>Delete this release</a>"
+          currentBuild.description = "<a href='${deleteJobUrl}'>[Click to delete release ${params.RELEASE_NAME}]</a>"
         }
       }
     }
