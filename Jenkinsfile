@@ -83,7 +83,7 @@ pipeline {
                   // Nếu tag là main thì tắt deploy
                   overrideYaml += """
 ${svc}:
-  enabled: false
+  enabled: true
 """
                 } else {
                   // Enable và set tag cho service muốn deploy
@@ -99,7 +99,7 @@ ${svc}:
                 // Các service khác disable
                 overrideYaml += """
 ${svc}:
-  enabled: false
+  enabled: true
 """
               }
             }
@@ -122,7 +122,7 @@ ${svc}:
           sh """
             helm upgrade --install petclinic spring-pet-clinic \
               -f spring-pet-clinic/values_devCD.yaml \
-              -n ${shortCommit} --create-namespace
+              -n dev --create-namespace
           """
         }
       }
