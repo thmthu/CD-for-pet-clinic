@@ -127,8 +127,8 @@ ${svc}:
           if(!env.COMMIT){
             env.COMMIT = "main"
           }
-          def newGatewayHost = "spring-pet-clinic-dev-${env.COMMIT}.local"
-          def newAdminHost = "spring-pet-clinic-dev-${env.COMMIT}-server.local"
+          env.gatewayHost = "spring-pet-clinic-dev-${env.COMMIT}.local"
+          env.adminHost = "spring-pet-clinic-dev-${env.COMMIT}-server.local"
 
           sh """
             sed -i 's|host:.*spring-pet-clinic.*\\.local|host: ${newGatewayHost}|' spring-pet-clinic/${VALUES_FILE}
@@ -138,6 +138,32 @@ ${svc}:
             sh "cat spring-pet-clinic/${VALUES_FILE}"
 
           echo "Updated ingress hosts with commit ID ${env.COMMIT}"
+        }
+      }
+    }
+
+    stage('Deploy with Helm') {
+      steps {
+        script {
+          echo "Deploy at branch commit: ${env.COMMIT}"
+
+          // Run the Helm deployment with the namespace
+          sh """
+            helm upgrade --install petclinic spring-pet-clinic \
+              -f spring-pet-clinic/values_devCD.yaml \
+              -n dev-${env.COMMIT} --create-namespace
+          """
+        }
+      }
+    }
+
+    stage('Deployment Link') {
+      steps {
+        script {
+
+          echo "🟢 [View Deployed Service]"
+          currentBuild.description = "<a href='${env.gatewayHost}' target='_blank'>${env.gatewayHost}</a>
+          <a href='${env.adminHost}' target='_blank'>${env.adminHost}</a>"
         }
       }
     }
