@@ -17,7 +17,7 @@ pipeline {
     stage('Get Branches') {
       steps {
         script {
-          def branches = sh(script: "git ls-remote --heads https://github.com/thmthu/CD-for-pet-clinic.git | awk '{print \$2}' | sed 's|refs/heads/||'", returnStdout: true)
+          def branches = sh(script: "git ls-remote --headshttps://github.com/MyTruong28022004/spring-petclinic-microservices-fork | awk '{print \$2}' | sed 's|refs/heads/||'", returnStdout: true)
                       .trim()
                       .split("\n")
           echo "Branches: ${branches}"
