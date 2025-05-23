@@ -133,10 +133,14 @@ ${svc}:
 
                     // Cập nhật admin ingress host
           sh """
-            yq e '
-              .admin.ingress.hosts[0].host = "spring-pet-clinic-dev-${env.COMMIT}-server.local"
-              ' -i ${VALUES_FILE}
+            def newGatewayHost = "spring-pet-clinic-dev-${env.COMMIT}.local"
+            def newAdminHost = "spring-pet-clinic-dev-${env.COMMIT}-server.local"
+
+            sh """
+              sed -i 's|host:.*spring-pet-clinic-dev.*\\.local|host: ${newGatewayHost}|' ${VALUES_FILE}
+              sed -i 's|host:.*spring-pet-clinic-dev.*-server\\.local|host: ${newAdminHost}|' ${VALUES_FILE}
             """
+
             sh "cat ${VALUES_FILE}"
 
           echo "Updated ingress hosts with commit ID ${env.COMMIT}"
