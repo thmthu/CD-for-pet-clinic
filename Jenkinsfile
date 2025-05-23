@@ -7,7 +7,7 @@ pipeline {
     string(name: "BRANCH_BUILD_FOR_VET", defaultValue: "main", description: "Branch muốn build")
     string(name: "BRANCH_BUILD_FOR_CUSTOMER", defaultValue: "main", description: "Branch muốn build")
     string(name: "BRANCH_BUILD_FOR_VISIT", defaultValue: "main", description: "Branch muốn build")
-    string 
+    string(name: 'RELEASE_NAME', defaultValue: 'vets', description: 'Release to deploy')
 
   }
 
@@ -100,7 +100,7 @@ pipeline {
                 // Nếu tag là main thì tắt deploy (hoặc bạn có thể enable mà dùng tag main)
                 overrideYaml += """
 ${svc}:
-  enabled: false
+  enabled: true
 """
               } else {
                 // Enable và set tag cho service muốn deploy
@@ -116,11 +116,10 @@ ${svc}:
               // Các service khác disable
               overrideYaml += """
 ${svc}:
-  enabled: false
+  enabled: true
 """
             }
           }
-
           writeFile file: "spring-pet-clinic/values.override.yaml", text: overrideYaml.trim()
           echo "Generated values.override.yaml:\n${overrideYaml}"
         }
@@ -132,6 +131,16 @@ ${svc}:
         sh """
           helm upgrade --install petclinic spring-pet-clinic -f spring-pet-clinic/values.yaml
         """
+      }
+    }
+    stage('Show Link') {
+      steps {
+        script{
+          def deleteJobUrl = "${env.JENKINS_URL}/job/delete_dev_release/buildWithParameters?RELEASE_NAME=${params.RELEASE_NAME}&NAMESPACE=dev"
+          echo "Click here to delete the deployed release:"
+          echo "<a href='${deleteJobUrl}'>Delete this release</a>"
+          currentBuild.description = "<a href='${deleteJobUrl}'>[Click to delete release ${params.RELEASE_NAME}]</a>"
+        }
       }
     }
   }
