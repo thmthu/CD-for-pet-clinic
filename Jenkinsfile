@@ -48,7 +48,7 @@ pipeline {
             echo "Đang ở trong thư mục CD-for-pet-clinic"
             def shortCommits = []
             branchBuilds.each { branchName ->
-              if (branch == 'main') {
+              if (branchName == 'main') {
                 shortCommits.add("latest")
               } else {
                 sh "git fetch origin"
