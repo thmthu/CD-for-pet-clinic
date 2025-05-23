@@ -132,7 +132,7 @@ ${svc}:
 
           sh """
             sed -i 's|host:.*spring-pet-clinic.*\\.local|host: ${env.gatewayHost}|' spring-pet-clinic/${VALUES_FILE}
-            sed -i 's|host:.*spring-pet-clinic-admin.*-server\\.local|host: ${env.adminHost}|' spring-pet-clinic/${VALUES_FILE}
+            sed -i 's|host:.*spring-pet-clinic-admin.*\\.local|host: ${env.adminHost}|' spring-pet-clinic/${VALUES_FILE}
           """
 
             sh "cat spring-pet-clinic/${VALUES_FILE}"
@@ -163,8 +163,8 @@ ${svc}:
 
           echo "🟢 [View Deployed Service]"
           currentBuild.description = """
-          <a href='${env.gatewayHost}' target='_blank'>${env.gatewayHost}</a><br>
-          <a href='${env.adminHost}' target='_blank'>${env.adminHost}</a>
+          <a href='http://${env.gatewayHost}' target='_blank'>${env.gatewayHost}</a><br>
+          <a href='http://${env.adminHost}' target='_blank'>${env.adminHost}</a>
         """
         }
       }
