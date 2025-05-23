@@ -115,6 +115,9 @@ ${svc}:
 
           // Run the Helm deployment with the namespace
           sh """
+          export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+          """
+          sh """
             helm upgrade --install petclinic spring-pet-clinic \
               -f spring-pet-clinic/values_devCD.yaml \
               -n ${shortCommit} --create-namespace
