@@ -25,22 +25,20 @@ visits:
     repository: mytruong28022004/spring-petclinic-visits-service
     pullPolicy: Always
     tag: "latest"
-
   service:
     type: ClusterIP
     port: 8082
-
   ingress:
     enabled: false
   env:
-      - name: EUREKA_INSTANCE_HOSTNAME
-        value: visits-service
-      - name: CONFIG_SERVER_URL
-        value: http://config-server:8888
-      - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-        value: http://discovery-server:8761/eureka/
-      - name: SPRING_ZIPKIN_BASE_URL
-        value: http://tracing-server:9411
+    - name: EUREKA_INSTANCE_HOSTNAME
+      value: visits-service
+    - name: CONFIG_SERVER_URL
+      value: http://config-server:8888
+    - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+      value: http://discovery-server:8761/eureka/
+    - name: SPRING_ZIPKIN_BASE_URL
+      value: http://tracing-server:9411
 customers:
   enabled: true
   replicaCount: 1
@@ -71,7 +69,6 @@ customers:
   service:
     type: ClusterIP
     port: 8081
-
   ingress:
     enabled: false
   env:
@@ -110,23 +107,20 @@ vets:
     repository: mytruong28022004/spring-petclinic-vets-service
     pullPolicy: Always
     tag: "latest"
-
   service:
     type: ClusterIP
     port: 8083
-
   ingress:
     enabled: false
   env:
-      - name: EUREKA_INSTANCE_HOSTNAME
-        value: vets-service
-      - name: CONFIG_SERVER_URL
-        value: http://config-server:8888
-      - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-        value: http://discovery-server:8761/eureka/
-      - name: SPRING_ZIPKIN_BASE_URL
-        value: http://tracing-server:9411
-
+    - name: EUREKA_INSTANCE_HOSTNAME
+      value: vets-service
+    - name: CONFIG_SERVER_URL
+      value: http://config-server:8888
+    - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+      value: http://discovery-server:8761/eureka/
+    - name: SPRING_ZIPKIN_BASE_URL
+      value: http://tracing-server:9411
 admin:
   enabled: false
   replicaCount: 1
@@ -134,8 +128,7 @@ admin:
   image:
     repository: mytruong28022004/spring-petclinic-admin-server
     pullPolicy: Always
-    tag: "latest" 
-
+    tag: "latest"
   service:
     type: ClusterIP
     port: 9090
@@ -150,7 +143,6 @@ admin:
           - path: /admin
             pathType: ImplementationSpecific
     tls: []
-
   env:
     - name: EUREKA_INSTANCE_HOSTNAME
       value: admin-server
@@ -160,9 +152,8 @@ admin:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://tracing-server:9411
-
 gateway:
-  enabled: true 
+  enabled: true
   replicaCount: 1
   fullnameOverride: api-gateway
   image:
@@ -194,7 +185,6 @@ gateway:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://tracing-server:9411
-    
 config:
   enabled: true
   replicaCount: 1
@@ -203,20 +193,16 @@ config:
     repository: mytruong28022004/spring-petclinic-config-server
     pullPolicy: Always
     tag: "latest"
-
   service:
     type: ClusterIP
     port: 8888
-
   ingress:
     enabled: false
-
   env:
     - name: EUREKA_INSTANCE_HOSTNAME
       value: config-server
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
-
 discovery:
   enabled: true
   replicaCount: 1
@@ -225,14 +211,11 @@ discovery:
     repository: mytruong28022004/spring-petclinic-discovery-server
     pullPolicy: Always
     tag: "latest"
-
   service:
     type: ClusterIP
     port: 8761
-
   ingress:
     enabled: false
-
   env:
     - name: EUREKA_INSTANCE_HOSTNAME
       value: discovery-server
@@ -250,14 +233,11 @@ tracing:
     repository: openzipkin/zipkin
     pullPolicy: Always
     tag: "latest"
-
   service:
     type: ClusterIP
     port: 9411
-
   ingress:
     enabled: false
-
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: kubernetes
@@ -269,3 +249,6 @@ tracing:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://tracing-server:9411
+spring-petclinic-customers-service:
+  image:
+    tag: 14f41be
