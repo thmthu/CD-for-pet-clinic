@@ -17,7 +17,7 @@ pipeline {
     stage('Get Branches') {
       steps {
         script {
-          def branches = sh(script: "git ls-remote --heads https://github.com/MyTruong28022004/spring-petclinic-microservices-fork | awk '{print \$2}' | sed 's|refs/heads/||'", returnStdout: true)
+          def branches = sh(script: "git ls-remote --heads https://github.com/thmthu/CD-for-pet-clinic.git | awk '{print \$2}' | sed 's|refs/heads/||'", returnStdout: true)
                       .trim()
                       .split("\n")
           echo "Branches: ${branches}"
@@ -35,8 +35,6 @@ pipeline {
           def services = ['vets-service', 'customers-service', 'visits-service']
           def branchs = env.BRANCH_LIST.split(',')
           def branchBuilds = [params.BRANCH_BUILD_FOR_VET, params.BRANCH_BUILD_FOR_CUSTOMER, params.BRANCH_BUILD_FOR_VISIT]
-          def serviceInput = params.SERVICE_NAME.trim()
-          def deployTagInput = params.DEPLOY_TAG.trim()
           def serviceBranchMap = [:]
 
           serviceBranchMap.each { service, branch ->
