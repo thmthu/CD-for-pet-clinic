@@ -176,7 +176,7 @@ ${svc}:
           def deleteJobUrl = "${env.JENKINS_URL}/job/delete-deployment/buildWithParameters?token=delete-token&RELEASE_NAME=${params.RELEASE_NAME}&NAMESPACE=dev-${env.COMMIT}"
           echo "Click here to delete the deployed release:"
           echo "<a href='${deleteJobUrl}'>Delete this release</a>"
-          currentBuild.description += "<a href='${deleteJobUrl}'>[Click to delete release ${params.RELEASE_NAME}]</a>"
+          currentBuild.description += "<br><a href='${deleteJobUrl}'>[Click to delete release ${params.RELEASE_NAME}]</a>"
         }
       }
     }
