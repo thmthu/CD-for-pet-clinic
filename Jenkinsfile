@@ -131,8 +131,8 @@ ${svc}:
           env.adminHost = "spring-pet-clinic-dev-${env.COMMIT}-server.local"
 
           sh """
-            sed -i 's|host:.*spring-pet-clinic.*\\.local|host: ${newGatewayHost}|' spring-pet-clinic/${VALUES_FILE}
-            sed -i 's|host:.*spring-pet-clinic-admin.*-server\\.local|host: ${newAdminHost}|' spring-pet-clinic/${VALUES_FILE}
+            sed -i 's|host:.*spring-pet-clinic.*\\.local|host: ${env.gatewayHost}|' spring-pet-clinic/${VALUES_FILE}
+            sed -i 's|host:.*spring-pet-clinic-admin.*-server\\.local|host: ${env.adminHost}|' spring-pet-clinic/${VALUES_FILE}
           """
 
             sh "cat spring-pet-clinic/${VALUES_FILE}"
