@@ -370,4 +370,4 @@ spring-petclinic-customers-service:
     tag: 1b4d030
 spring-petclinic-vets-service:
   image:
-    tag: 326a98d
+    tag: cf2ccec
