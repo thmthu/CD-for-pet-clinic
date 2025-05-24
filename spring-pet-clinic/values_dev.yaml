@@ -368,3 +368,6 @@ tracing:
 spring-petclinic-customers-service:
   image:
     tag: 1b4d030
+spring-petclinic-vets-service:
+  image:
+    tag: 326a98d
