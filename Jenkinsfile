@@ -149,7 +149,7 @@ ${svc}:
 
           // Run the Helm deployment with the namespace
           sh """
-            helm upgrade --install petclinic spring-pet-clinic \
+            helm upgrade --install ${params.RELEASE_NAME} spring-pet-clinic \
               -f spring-pet-clinic/values_devCD.yaml \
               -n dev-${env.COMMIT} --create-namespace
           """
@@ -177,17 +177,6 @@ ${svc}:
           echo "Click here to delete the deployed release:"
           echo "<a href='${deleteJobUrl}'>Delete this release</a>"
           currentBuild.description += "<br><a href='${deleteJobUrl}'>[Click to delete release ${params.RELEASE_NAME}]</a>"
-        }
-      }
-    }
-
-    stage('Deployment Link') {
-      steps {
-        script {
-          def link = "spring-pet-clinic.local"
-
-          echo "🟢 [View Deployed Service](${link})"
-          currentBuild.description = "<a href='${link}' target='_blank'>${link}</a>"
         }
       }
     }
