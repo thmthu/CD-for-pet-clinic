@@ -11,7 +11,7 @@ spec:
     path: spring-pet-clinic
     helm:
       valueFiles:
-        - values_dev.yaml
+        - values_staging.yaml
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: staging
