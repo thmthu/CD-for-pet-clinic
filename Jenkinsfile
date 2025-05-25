@@ -2,8 +2,6 @@ pipeline {
   agent any
 
   parameters {
-    string(name: 'SERVICE_NAME', defaultValue: '', description: 'Tên service muốn deploy, ví dụ vets-service, customers-service, visits-service')
-    string(name: 'DEPLOY_TAG', defaultValue: 'main', description: 'Tag muốn deploy (newest để lấy tag mới nhất trên DockerHub)')
     string(name: "BRANCH_BUILD_FOR_VET", defaultValue: "main", description: "Branch muốn build")
     string(name: "BRANCH_BUILD_FOR_CUSTOMER", defaultValue: "main", description: "Branch muốn build")
     string(name: "BRANCH_BUILD_FOR_VISIT", defaultValue: "main", description: "Branch muốn build")
@@ -40,8 +38,6 @@ pipeline {
           def services = ['vets-service', 'customers-service', 'visits-service']
           def branchs = env.BRANCH_LIST.split(',')
           def branchBuilds = [params.BRANCH_BUILD_FOR_VET, params.BRANCH_BUILD_FOR_CUSTOMER, params.BRANCH_BUILD_FOR_VISIT]
-          def serviceInput = params.SERVICE_NAME.trim()
-          def deployTagInput = params.DEPLOY_TAG.trim()
           def serviceBranchMap = [:]
 
           serviceBranchMap.each { service, branch ->
@@ -75,43 +71,18 @@ pipeline {
               }
             }
             
-            def tagToDeploy = deployTagInput  
-            echo "Deploying service '${serviceInput}' với tag: ${tagToDeploy}"
             echo "commit: ${env.COMMIT}"
             // Tạo nội dung override.yaml
             def overrideYaml = ""
 
             services.each { svc ->
-              if (svc == serviceInput) {
-                if (tagToDeploy == serviceBranchMap[svc]) {
-                  // Nếu tag là main thì tắt deploy
-                  overrideYaml += """
-${svc}:
-  enabled: true
-  image:
-    repository: ${DOCKERHUB_USER}/${IMAGE_PREFIX}-${svc}
-    tag: ${serviceBranchMap[svc]}
-"""
-                } else {
-                  // Enable và set tag cho service muốn deploy
-                  overrideYaml += """
-${svc}:
-  enabled: true
-  image:
-    repository: ${DOCKERHUB_USER}/${IMAGE_PREFIX}-${svc}
-    tag: ${serviceBranchMap[svc]}
-"""
-                }
-              } else {
-                // Các service khác disable
                 overrideYaml += """
-${svc}:
-  enabled: true
-  image:
-    repository: ${DOCKERHUB_USER}/${IMAGE_PREFIX}-${svc}
-    tag: ${serviceBranchMap[svc]}
-"""
-              }
+            ${svc}:
+              enabled: true
+              image:
+                repository: ${DOCKERHUB_USER}/${IMAGE_PREFIX}-${svc}
+                tag: ${serviceBranchMap[svc]}
+            """
             }
 
             writeFile file: "spring-pet-clinic/values_devCD.override.yaml", text: overrideYaml.trim()
