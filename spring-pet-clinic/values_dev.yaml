@@ -367,7 +367,7 @@ tracing:
       value: http://tracing-server:9411
 spring-petclinic-customers-service:
   image:
-    tag: 1b4d030
+    tag: adec36b
 spring-petclinic-vets-service:
   image:
-    tag: cf2ccec
+    tag: adec36b
