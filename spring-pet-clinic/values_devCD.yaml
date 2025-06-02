@@ -2,7 +2,14 @@ visits:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "10"  # Triển khai sau các service cơ bản
+    helm.sh/hook-weight: "10"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -55,7 +62,14 @@ customers:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "10"  # Triển khai sau các service cơ bản
+    helm.sh/hook-weight: "10"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -108,7 +122,14 @@ vets:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "10"  # Triển khai sau các service cơ bản
+    helm.sh/hook-weight: "10"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -161,7 +182,14 @@ admin:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "15"  # Triển khai sau các service khác
+    helm.sh/hook-weight: "15"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -223,7 +251,14 @@ gateway:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "10"  # Triển khai sau các service cơ bản
+    helm.sh/hook-weight: "10"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -287,7 +322,14 @@ config:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "-10"  # Triển khai đầu tiên
+    helm.sh/hook-weight: "-10"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -327,7 +369,14 @@ discovery:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "-5"  # Triển khai thứ hai
+    helm.sh/hook-weight: "-5"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -380,7 +429,14 @@ tracing:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "0"  # Triển khai trước các service thông thường
+    helm.sh/hook-weight: "0"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
   fullnameOverride: tracing-server
   image:
     repository: openzipkin/zipkin
