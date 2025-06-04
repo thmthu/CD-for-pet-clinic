@@ -161,11 +161,11 @@ pipeline {
     stage('Apply Observability Ingress') {
       steps {
         script {
-          echo "🔧 Applying Ingress with YOUR_IP=${env.YOUR_IP}"
+          echo "Applying Ingress with YOUR_IP=${env.YOUR_IP}"
           sh '''
-            envsubst < k8s-ingress/grafana-ingress.yaml | kubectl apply -f -
-            envsubst < k8s-ingress/zipkin-ingress.yaml | kubectl apply -f -
-            envsubst < k8s-ingress/prometheus-ingress.yaml | kubectl apply -f -
+            envsubst < spring-pet-clinic/observability/grafana-ingress.yaml | kubectl apply -f -
+            envsubst < spring-pet-clinic/observability/zipkin-ingress.yaml | kubectl apply -f -
+            envsubst < spring-pet-clinic/observability/prometheus-ingress.yaml | kubectl apply -f -
           '''
         }
       }
