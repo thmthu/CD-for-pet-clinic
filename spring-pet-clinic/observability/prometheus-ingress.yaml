@@ -14,7 +14,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            service:
-              name: prometheus-server
-              port:
-                number: 80
+            name: prometheus
+            port:
+              number: 80
