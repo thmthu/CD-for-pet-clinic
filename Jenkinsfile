@@ -176,21 +176,28 @@ pipeline {
         script {
           echo "🟢 [View Deployed Service]"
 
-          // Các domain ingress nếu dùng nip.io (bạn có thể dùng biến env nếu cần tùy biến động)
-          def baseIP = "35.209.75.248"  // Hoặc lấy động từ ingress controller nếu có script
+          def baseIP = "35.209.75.248"
           def zipkinURL = "http://zipkin.${baseIP}.nip.io/zipkin/"
           def grafanaURL = "http://grafana.${baseIP}.nip.io"
           def prometheusURL = "http://prometheus.${baseIP}.nip.io"
 
-          currentBuild.description = """
-          <b>Deployed Application:</b><br>
-          - <a href='http://${env.gatewayHost}' target='_blank'>User Gateway</a><br>
-          - <a href='http://${env.adminHost}' target='_blank'>Admin Server</a><br><br>
+          // Lấy Grafana password từ Kubernetes secret
+          def grafanaPassword = sh(
+            script: "kubectl get secret --namespace observability grafana -o jsonpath=\"{.data.admin-password}\" | base64 --decode",
+            returnStdout: true
+          ).trim()
 
-          <b>Observability Tools:</b><br>
-          - <a href='${grafanaURL}' target='_blank'>Grafana Dashboard</a><br>
-          - <a href='${prometheusURL}' target='_blank'>Prometheus Metrics</a><br>
-          - <a href='${zipkinURL}' target='_blank'>Zipkin Tracing</a><br>
+          currentBuild.description = """
+            <b>Deployed Application:</b><br>
+            - <a href='http://${env.gatewayHost}' target='_blank'>${env.gatewayHost}</a><br>
+            - <a href='http://${env.adminHost}' target='_blank'>${env.adminHost}</a><br><br>
+
+            <b>Observability Tools:</b><br>
+            - <a href='${grafanaURL}' target='_blank'>Grafana Dashboard</a><br>
+            - <a href='${prometheusURL}' target='_blank'>Prometheus Metrics</a><br>
+            - <a href='${zipkinURL}' target='_blank'>Zipkin Tracing</a><br><br>
+
+            <b>Grafana Admin Password:</b> <code>${grafanaPassword}</code>
           """
         }
       }
