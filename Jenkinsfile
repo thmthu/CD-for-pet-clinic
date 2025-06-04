@@ -100,6 +100,8 @@ pipeline {
           }
           env.gatewayHost = "spring-pet-clinic-dev-${env.COMMIT}.local"
           env.adminHost = "spring-pet-clinic-dev-${env.COMMIT}-server.local"
+          env.tracingHost = "tracing-server-dev-${env.COMMIT}.local"
+
 
           sh """
             sed -i 's|host: spring-pet-clinic\\.local|host: ${env.gatewayHost}|' spring-pet-clinic/${VALUES_FILE}
