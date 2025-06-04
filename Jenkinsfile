@@ -163,9 +163,9 @@ pipeline {
         script {
           echo "🔧 Applying Ingress with YOUR_IP=${env.YOUR_IP}"
           sh '''
-            envsubst < observability/grafana-ingress.yaml | kubectl apply -f -
-            envsubst < observability/zipkin-ingress.yaml | kubectl apply -f -
-            envsubst < observability/prometheus-ingress.yaml | kubectl apply -f -
+            envsubst < k8s-ingress/grafana-ingress.yaml | kubectl apply -f -
+            envsubst < k8s-ingress/zipkin-ingress.yaml | kubectl apply -f -
+            envsubst < k8s-ingress/prometheus-ingress.yaml | kubectl apply -f -
           '''
         }
       }
