@@ -14,6 +14,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: zipkin
+            name: tracing-server
             port:
               number: 9411
