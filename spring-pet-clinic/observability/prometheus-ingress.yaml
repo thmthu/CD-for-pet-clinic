@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: prometheus
+  name: prometheus-server
   namespace: observability
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
@@ -14,6 +14,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: prometheus
+            name: prometheus-server
             port:
-              number: 80
+              number: 9090
