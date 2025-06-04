@@ -51,7 +51,7 @@ visits:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.35.209.75.248.nip.io
 customers:
   enabled: true
   replicaCount: 1
@@ -105,7 +105,7 @@ customers:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.35.209.75.248.nip.io
 vets:
   enabled: true
   replicaCount: 1
@@ -159,7 +159,7 @@ vets:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.35.209.75.248.nip.io
 admin:
   enabled: true
   replicaCount: 1
@@ -222,7 +222,7 @@ admin:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.35.209.75.248.nip.io
 gateway:
   enabled: true
   replicaCount: 1
@@ -287,7 +287,7 @@ gateway:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.35.209.75.248.nip.io
 config:
   enabled: true
   replicaCount: 1
@@ -387,7 +387,7 @@ discovery:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.35.209.75.248.nip.io
 tracing:
   enabled: true
   replicaCount: 1
@@ -420,7 +420,7 @@ tracing:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.35.209.75.248.nip.io
 spring-petclinic-customers-service:
   image:
     tag: a35f51c
