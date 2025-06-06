@@ -174,7 +174,7 @@ pipeline {
           echo "🟢 [View Deployed Service]"
           currentBuild.description = """
           <a href='http://${env.gatewayHost}' target='_blank'>${env.gatewayHost}</a><br>
-          <a href='http://${env.adminHost}' target='_blank'>${env.adminHost}</a>
+          <a href='http://${env.adminHost}' target='_blank'>${env.adminHost}</a><br>
           <a href='http://zipkin.dev.local' target='_blank'>zipkin.dev.local</a>
         """
         }
