@@ -178,7 +178,7 @@ pipeline {
 
           // Các domain ingress nếu dùng nip.io (bạn có thể dùng biến env nếu cần tùy biến động)
           def baseIP = "35.209.75.248"  // Hoặc lấy động từ ingress controller nếu có script
-          def zipkinURL = "http://zipkin.${baseIP}.nip.io/zipkin/"
+          def zipkinURL = "http://zipkin.${baseIP}.nip.io/"
           def grafanaURL = "http://grafana.${baseIP}.nip.io"
           def prometheusURL = "http://prometheus.${baseIP}.nip.io"
 
