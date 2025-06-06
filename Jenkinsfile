@@ -113,6 +113,50 @@ pipeline {
       }
     }
 
+    stage('Deploy Zipkin') {
+      steps {
+        script {
+          echo "[INFO] Add Zipkin Helm repo"
+          sh '''
+            helm repo add openzipkin https://openzipkin.github.io/zipkin || true
+            helm repo update
+
+            echo "[INFO] Deploy Zipkin using Helm"
+            helm upgrade --install tracing-server openzipkin/zipkin \
+              --set service.name=tracing-server \
+              --namespace zipkin --create-namespace
+
+            echo "[INFO] Apply ingress for zipkin.dev.local"
+            cat <<EOF | kubectl apply -f -
+            apiVersion: networking.k8s.io/v1
+            kind: Ingress
+            metadata:
+              name: zipkin-ingress
+              namespace: zipkin
+              annotations:
+                kubernetes.io/ingress.class: traefik
+            spec:
+              rules:
+              - host: zipkin.dev.local
+                http:
+                  paths:
+                  - path: /
+                    pathType: Prefix
+                    backend:
+                      service:
+                        name: tracing-server
+                        port:
+                          number: 9411
+            EOF
+
+            echo "[INFO] Waiting for Zipkin to be ready"
+            kubectl rollout status deployment tracing-server -n zipkin --timeout=120s
+          '''
+        }
+      }
+    }
+
+
     stage('Deploy with Helm') {
       steps {
         script {
@@ -136,6 +180,7 @@ pipeline {
           currentBuild.description = """
           <a href='http://${env.gatewayHost}' target='_blank'>${env.gatewayHost}</a><br>
           <a href='http://${env.adminHost}' target='_blank'>${env.adminHost}</a>
+          <a href='http://zipkin.dev.local' target='_blank'>zipkin.dev.local</a>
         """
         }
       }
