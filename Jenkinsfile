@@ -121,8 +121,9 @@ pipeline {
           // Run the Helm deployment with the namespace
           sh """
             helm upgrade --install ${params.RELEASE_NAME} spring-pet-clinic \
-              -f spring-pet-clinic/values_devCD.yaml \
-              -n dev-${env.COMMIT} --create-namespace
+            -f spring-pet-clinic/values_devCD.yaml \
+            -f spring-pet-clinic/values_devCD.override.yaml \
+            -n dev-${env.COMMIT} --create-namespace
           """
         }
       }
