@@ -51,7 +51,9 @@ visits:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.zipkin.svc.cluster.local:9411
+    - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
+      value: "1.0"
 customers:
   enabled: true
   replicaCount: 1
@@ -105,7 +107,9 @@ customers:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.zipkin.svc.cluster.local:9411
+    - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
+      value: "1.0"
 vets:
   enabled: true
   replicaCount: 1
@@ -159,7 +163,9 @@ vets:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.zipkin.svc.cluster.local:9411
+    - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
+      value: "1.0"
 admin:
   enabled: true
   replicaCount: 1
@@ -222,7 +228,9 @@ admin:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.zipkin.svc.cluster.local:9411
+    - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
+      value: "1.0"
 gateway:
   enabled: true
   replicaCount: 1
@@ -287,7 +295,9 @@ gateway:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.zipkin.svc.cluster.local:9411
+    - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
+      value: "1.0"
 config:
   enabled: true
   replicaCount: 1
@@ -387,7 +397,9 @@ discovery:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.zipkin.svc.cluster.local:9411
+    - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
+      value: "1.0"
 tracing:
   enabled: true
   replicaCount: 1
@@ -429,7 +441,9 @@ tracing:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.zipkin.svc.cluster.local:9411
+    - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
+      value: "1.0"
 spring-petclinic-customers-service:
   image:
     tag: a35f51c

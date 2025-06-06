@@ -112,51 +112,22 @@ pipeline {
         }
       }
     }
-
+    
     stage('Deploy Zipkin') {
       steps {
         script {
-          sh """
+          sh '''
             helm repo add openzipkin https://openzipkin.github.io/zipkin || true
             helm repo update
 
-            # Deploy Zipkin, set fullnameOverride để service tên đúng với ingress backend
-            helm upgrade --install tracing-server openzipkin/zipkin \
+            helm upgrade --install zipkin openzipkin/zipkin \
               --namespace zipkin --create-namespace \
-              --set fullnameOverride=tracing-server-zipkin
-
-            cat > zipkin-ingress.yaml <<EOF
-    apiVersion: networking.k8s.io/v1
-    kind: Ingress
-    metadata:
-      name: zipkin-ingress
-      namespace: zipkin
-      annotations:
-        kubernetes.io/ingress.class: traefik
-    spec:
-      rules:
-      - host: zipkin.dev.local
-        http:
-          paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: tracing-server-zipkin
-                port:
-                  number: 9411
-    EOF
-
-            kubectl apply -f zipkin-ingress.yaml
-
-            kubectl rollout status deployment tracing-server-zipkin -n zipkin --timeout=120s
-          """
-
-          sh """
-            kubectl get pods -n zipkin
-            kubectl describe pod <pod-name> -n zipkin
-            kubectl get ingress -n zipkin
-          """
+              --set service.type=ClusterIP \
+              --set ingress.enabled=true \
+              --set ingress.hosts[0].host=zipkin.dev.local \
+              --set ingress.hosts[0].paths[0].path=/ \
+              --set ingress.hosts[0].paths[0].pathType=Prefix
+          '''
         }
       }
     }
