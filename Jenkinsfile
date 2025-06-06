@@ -14,6 +14,7 @@ pipeline {
     KUBECONFIG = "/etc/rancher/k3s/k3s.yaml"
     JENKINS_URL= "http://35.209.75.248:8080/"
     VALUES_FILE = "values_devCD.yaml"
+    YOUR_IP = "35.209.75.248"
   }
   
   stages {
@@ -112,25 +113,6 @@ pipeline {
         }
       }
     }
-    
-    stage('Deploy Zipkin') {
-      steps {
-        script {
-          sh '''
-            helm repo add openzipkin https://openzipkin.github.io/zipkin || true
-            helm repo update
-
-            helm upgrade --install zipkin openzipkin/zipkin \
-              --namespace zipkin --create-namespace \
-              --set service.type=ClusterIP \
-              --set ingress.enabled=true \
-              --set ingress.hosts[0].host=zipkin.dev.local \
-              --set ingress.hosts[0].paths[0].path=/ \
-              --set ingress.hosts[0].paths[0].pathType=Prefix
-          '''
-        }
-      }
-    }
 
     stage('Deploy with Helm') {
       steps {
@@ -147,16 +129,69 @@ pipeline {
       }
     }
 
+    stage('Deploy Observability Tools') {
+      steps {
+        script {
+          sh '''
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo add grafana https://grafana.github.io/helm-charts
+          helm repo add openzipkin https://openzipkin.github.io/zipkin
+          helm repo update
+
+          # Tạo namespace observability nếu chưa có
+          kubectl create namespace observability --dry-run=client -o yaml | kubectl apply -f -
+
+          # Deploy Zipkin
+          helm upgrade --install zipkin openzipkin/zipkin -n observability
+
+          # Deploy Prometheus
+          helm upgrade --install prometheus prometheus-community/prometheus -n observability
+
+          # Deploy Grafana with anonymous access
+          helm upgrade --install grafana grafana/grafana \
+            --set grafana.ini.auth.anonymous.enabled=true \
+            --set grafana.ini.auth.anonymous.org_role=Admin \
+            --set service.type=ClusterIP \
+            -n observability
+          '''
+        }
+      }
+    }
+
+    stage('Apply Observability Ingress') {
+      steps {
+        script {
+          echo "Applying Ingress with YOUR_IP=${env.YOUR_IP}"
+          sh '''
+            envsubst < spring-pet-clinic/observability/grafana-ingress.yaml | kubectl apply -f -
+            envsubst < spring-pet-clinic/observability/zipkin-ingress.yaml | kubectl apply -f -
+            envsubst < spring-pet-clinic/observability/prometheus-ingress.yaml | kubectl apply -f -
+          '''
+        }
+      }
+    }
+
     stage('Deployment Link') {
       steps {
         script {
-
           echo "🟢 [View Deployed Service]"
+
+          // Các domain ingress nếu dùng nip.io (bạn có thể dùng biến env nếu cần tùy biến động)
+          def baseIP = "35.209.75.248"  // Hoặc lấy động từ ingress controller nếu có script
+          def zipkinURL = "http://zipkin.${baseIP}.nip.io/zipkin/"
+          def grafanaURL = "http://grafana.${baseIP}.nip.io"
+          def prometheusURL = "http://prometheus.${baseIP}.nip.io"
+
           currentBuild.description = """
-          <a href='http://${env.gatewayHost}' target='_blank'>${env.gatewayHost}</a><br>
-          <a href='http://${env.adminHost}' target='_blank'>${env.adminHost}</a><br>
-          <a href='http://zipkin.dev.local' target='_blank'>zipkin.dev.local</a>
-        """
+          <b>Deployed Application:</b><br>
+          - <a href='http://${env.gatewayHost}' target='_blank'>${env.gatewayHost}</a><br>
+          - <a href='http://${env.adminHost}' target='_blank'>${env.adminHost}</a><br><br>
+
+          <b>Observability Tools:</b><br>
+          - <a href='${grafanaURL}' target='_blank'>Grafana Dashboard</a><br>
+          - <a href='${prometheusURL}' target='_blank'>Prometheus Metrics</a><br>
+          - <a href='${zipkinURL}' target='_blank'>Zipkin Tracing</a><br>
+          """
         }
       }
     }
