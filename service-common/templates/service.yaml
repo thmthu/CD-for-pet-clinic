@@ -4,6 +4,10 @@ metadata:
   name: {{ include "service-common.fullname" . }}
   labels:
     {{- include "service-common.labels" . | nindent 4 }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: "/actuator/prometheus"
+    prometheus.io/port: "{{ .Values.service.port }}"
 spec:
   type: {{ .Values.service.type }}
   ports:
