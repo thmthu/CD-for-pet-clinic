@@ -116,46 +116,41 @@ pipeline {
     stage('Deploy Zipkin') {
       steps {
         script {
-          echo "[INFO] Add Zipkin Helm repo"
-          sh '''
+          sh """
             helm repo add openzipkin https://openzipkin.github.io/zipkin || true
             helm repo update
 
-            echo "[INFO] Deploy Zipkin using Helm"
-            helm upgrade --install tracing-server openzipkin/zipkin \
-              --set service.name=tracing-server \
-              --namespace zipkin --create-namespace
+            helm upgrade --install tracing-server openzipkin/zipkin --set service.name=tracing-server --namespace zipkin --create-namespace
 
-            echo "[INFO] Apply ingress for zipkin.dev.local"
-            cat <<EOF | kubectl apply -f -
-            apiVersion: networking.k8s.io/v1
-            kind: Ingress
-            metadata:
-              name: zipkin-ingress
-              namespace: zipkin
-              annotations:
-                kubernetes.io/ingress.class: traefik
-            spec:
-              rules:
-              - host: zipkin.dev.local
-                http:
-                  paths:
-                  - path: /
-                    pathType: Prefix
-                    backend:
-                      service:
-                        name: tracing-server
-                        port:
-                          number: 9411
-            EOF
+            cat > zipkin-ingress.yaml <<EOF
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: zipkin-ingress
+      namespace: zipkin
+      annotations:
+        kubernetes.io/ingress.class: traefik
+    spec:
+      rules:
+      - host: zipkin.dev.local
+        http:
+          paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tracing-server
+                port:
+                  number: 9411
+    EOF
 
-            echo "[INFO] Waiting for Zipkin to be ready"
+            kubectl apply -f zipkin-ingress.yaml
+
             kubectl rollout status deployment tracing-server -n zipkin --timeout=120s
-          '''
+          """
         }
       }
     }
-
 
     stage('Deploy with Helm') {
       steps {
