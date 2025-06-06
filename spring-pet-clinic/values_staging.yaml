@@ -301,14 +301,15 @@ tracing:
     port: 9411
   ingress:
     enabled: true
-    className: nginx
+    className: "traefik"
     annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /
+      kubernetes.io/ingress.class: traefik
     hosts:
       - host: zipkin.dev.local
         paths:
           - path: /
-            pathType: Prefix
+            pathType: ImplementationSpecific
+    tls: []
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: kubernetes
