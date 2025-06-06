@@ -447,10 +447,14 @@ tracing:
     port: 9411
   ingress:
     enabled: true
+    className: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
     hosts:
       - host: zipkin.dev.local
         paths:
-          - /
+          - path: /
+            pathType: Prefix
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: kubernetes
