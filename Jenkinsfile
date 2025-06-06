@@ -85,19 +85,6 @@ pipeline {
             """
             }
 
-            // Thêm override cho tracing (Zipkin)
-            overrideYaml += """
-            tracing:
-              enabled: true
-              ingress:
-                enabled: true
-                host: tracing-server-dev-${env.COMMIT}.local
-                annotations:
-                  nginx.ingress.kubernetes.io/rewrite-target: /
-                path: /
-                pathType: ImplementationSpecific
-            """
-
             writeFile file: "spring-pet-clinic/values_devCD.override.yaml", text: overrideYaml.trim()
             echo "Generated values_devCD.override.yaml:\n${overrideYaml}"
           }
@@ -113,8 +100,6 @@ pipeline {
           }
           env.gatewayHost = "spring-pet-clinic-dev-${env.COMMIT}.local"
           env.adminHost = "spring-pet-clinic-dev-${env.COMMIT}-server.local"
-          env.tracingHost = "tracing-server-dev-${env.COMMIT}.local"
-
 
           sh """
             sed -i 's|host: spring-pet-clinic\\.local|host: ${env.gatewayHost}|' spring-pet-clinic/${VALUES_FILE}
@@ -150,8 +135,7 @@ pipeline {
           echo "🟢 [View Deployed Service]"
           currentBuild.description = """
           <a href='http://${env.gatewayHost}' target='_blank'>${env.gatewayHost}</a><br>
-          <a href='http://${env.adminHost}' target='_blank'>${env.adminHost}</a><br>
-          <a href='http://${env.tracingHost}' target='_blank'>${env.tracingHost}</a>
+          <a href='http://${env.adminHost}' target='_blank'>${env.adminHost}</a>
         """
         }
       }
