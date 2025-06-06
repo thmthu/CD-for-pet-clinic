@@ -447,6 +447,10 @@ tracing:
     port: 9411
   ingress:
     enabled: true
+    hosts:
+      - host: zipkin.dev.local
+        paths:
+          - /
   env:
     - name: SPRING_PROFILES_ACTIVE
       value: kubernetes

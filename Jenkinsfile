@@ -122,7 +122,6 @@ pipeline {
           sh """
             helm upgrade --install ${params.RELEASE_NAME} spring-pet-clinic \
               -f spring-pet-clinic/values_devCD.yaml \
-              --set zipkin.enabled=true \
               -n dev-${env.COMMIT} --create-namespace
           """
         }
