@@ -361,7 +361,7 @@ config:
     periodSeconds: 10
   fullnameOverride: config-server
   image:
-    repository: mytruong28022004/spring-petclinic-config-server
+    repository: phoegras/spring-petclinic-config-server
     pullPolicy: Always
     tag: "latest"
   service:
