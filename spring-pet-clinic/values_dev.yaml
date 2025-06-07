@@ -51,7 +51,7 @@ visits:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://zipkin.observability.svc.cluster.local
+      value: http://zipkin.observability.svc.cluster.local:80
     - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
       value: "1.0"
 customers:
@@ -107,7 +107,7 @@ customers:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://zipkin.observability.svc.cluster.local
+      value: http://zipkin.observability.svc.cluster.local:80
     - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
       value: "1.0"
 vets:
@@ -163,7 +163,7 @@ vets:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://zipkin.observability.svc.cluster.local
+      value: http://zipkin.observability.svc.cluster.local:80
     - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
       value: "1.0"
 admin:
@@ -228,7 +228,7 @@ admin:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://zipkin.observability.svc.cluster.local
+      value: http://zipkin.observability.svc.cluster.local:80
     - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
       value: "1.0"
 gateway:
@@ -295,7 +295,7 @@ gateway:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://zipkin.observability.svc.cluster.local
+      value: http://zipkin.observability.svc.cluster.local:80
     - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
       value: "1.0"
 config:
@@ -397,6 +397,6 @@ discovery:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://zipkin.observability.svc.cluster.local
+      value: http://zipkin.observability.svc.cluster.local:80
     - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
       value: "1.0"

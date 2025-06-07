@@ -45,7 +45,7 @@ visits:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://zipkin.observability.svc.cluster.local
+      value: http://zipkin.observability.svc.cluster.local:80
     - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
       value: "1.0"
 
@@ -96,7 +96,7 @@ customers:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://zipkin.observability.svc.cluster.local
+      value: http://zipkin.observability.svc.cluster.local:80
     - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
       value: "1.0"
 
@@ -147,7 +147,7 @@ vets:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://zipkin.observability.svc.cluster.local
+      value: http://zipkin.observability.svc.cluster.local:80
     - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
       value: "1.0"
 
@@ -188,7 +188,7 @@ admin:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://zipkin.observability.svc.cluster.local
+      value: http://zipkin.observability.svc.cluster.local:80
     - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
       value: "1.0"
 
@@ -231,7 +231,7 @@ gateway:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://zipkin.observability.svc.cluster.local
+      value: http://zipkin.observability.svc.cluster.local:80
     - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
       value: "1.0"
 
@@ -289,6 +289,6 @@ discovery:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://zipkin.observability.svc.cluster.local
+      value: http://zipkin.observability.svc.cluster.local:80
     - name: SPRING_SLEUTH_SAMPLER_PROBABILITY
       value: "1.0"
