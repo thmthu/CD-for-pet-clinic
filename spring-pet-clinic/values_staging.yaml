@@ -1,13 +1,6 @@
 visits:
   enabled: true
   replicaCount: 1
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 100m
-      memory: 256Mi
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -46,17 +39,9 @@ visits:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://tracing-server:9411
-
 customers:
   enabled: true
   replicaCount: 1
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 100m
-      memory: 256Mi
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -95,17 +80,9 @@ customers:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://tracing-server:9411
-
 vets:
   enabled: true
   replicaCount: 1
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 100m
-      memory: 256Mi
   fullnameOverride: vets-service
   livenessProbe:
     httpGet:
@@ -144,17 +121,9 @@ vets:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://tracing-server:9411
-
 admin:
   enabled: true
   replicaCount: 1
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 100m
-      memory: 256Mi
   fullnameOverride: admin-server
   image:
     repository: mytruong28022004/spring-petclinic-admin-server
@@ -183,17 +152,9 @@ admin:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://tracing-server:9411
-
 gateway:
   enabled: true
   replicaCount: 1
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 100m
-      memory: 256Mi
   fullnameOverride: api-gateway
   image:
     repository: mytruong28022004/spring-petclinic-api-gateway
@@ -224,17 +185,9 @@ gateway:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://tracing-server:9411
-
 config:
   enabled: true
   replicaCount: 1
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 100m
-      memory: 256Mi
   fullnameOverride: config-server
   image:
     repository: mytruong28022004/spring-petclinic-config-server
@@ -250,17 +203,9 @@ config:
       value: config-server
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
-
 discovery:
   enabled: true
   replicaCount: 1
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 100m
-      memory: 256Mi
   fullnameOverride: discovery-server
   image:
     repository: mytruong28022004/spring-petclinic-discovery-server
@@ -280,17 +225,9 @@ discovery:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://tracing-server:9411
-
 tracing:
   enabled: true
   replicaCount: 1
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
-    requests:
-      cpu: 100m
-      memory: 256Mi
   fullnameOverride: tracing-server
   image:
     repository: openzipkin/zipkin
