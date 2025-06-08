@@ -1,25 +1,10 @@
 visits:
   enabled: true
   replicaCount: 1
-  livenessProbe:
-    httpGet:
-      path: /actuator/health
-      port: 8082
-    initialDelaySeconds: 120
-    periodSeconds: 30
-    failureThreshold: 3
-  readinessProbe:
-    httpGet:
-      path: /actuator/health
-      port: 8082
-    initialDelaySeconds: 90
-    periodSeconds: 10
-  startupProbe:
-    httpGet:
-      path: /actuator/health
-      port: 8082
-    failureThreshold: 30
-    periodSeconds: 10
+  
+  
+
+  
   fullnameOverride: visits-service
   image:
     repository: mytruong28022004/spring-petclinic-visits-service
