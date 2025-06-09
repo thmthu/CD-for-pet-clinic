@@ -371,3 +371,6 @@ spring-petclinic-customers-service:
 spring-petclinic-vets-service:
   image:
     tag: 8db9fd1
+spring-petclinic-api-gateway:
+  image:
+    tag: 6ca5c46
