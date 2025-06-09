@@ -348,3 +348,6 @@ spring-petclinic-vets-service:
 spring-petclinic-visits-service:
   image:
     tag: a579d52
+spring-petclinic-config-server:
+  image:
+    tag: 035823c
