@@ -1,6 +1,6 @@
 visits:
   enabled: true
-  replicaCount: 1
+  replicaCount: 0
   podAnnotations:
     helm.sh/hook-weight: "10" # Triển khai sau các service cơ bản
   livenessProbe:
@@ -47,7 +47,7 @@ visits:
       value: http://tracing-server:9411
 customers:
   enabled: true
-  replicaCount: 1
+  replicaCount: 0
   podAnnotations:
     helm.sh/hook-weight: "10" # Triển khai sau các service cơ bản
   livenessProbe:
@@ -94,7 +94,7 @@ customers:
       value: http://tracing-server:9411
 vets:
   enabled: true
-  replicaCount: 1
+  replicaCount: 0
   podAnnotations:
     helm.sh/hook-weight: "10" # Triển khai sau các service cơ bản
   livenessProbe:
@@ -141,7 +141,7 @@ vets:
       value: http://tracing-server:9411
 admin:
   enabled: true
-  replicaCount: 1
+  replicaCount: 0
   podAnnotations:
     helm.sh/hook-weight: "15" # Triển khai sau các service khác
   livenessProbe:
@@ -197,7 +197,7 @@ admin:
       value: http://tracing-server:9411
 gateway:
   enabled: true
-  replicaCount: 1
+  replicaCount: 0
   podAnnotations:
     helm.sh/hook-weight: "10" # Triển khai sau các service cơ bản
   livenessProbe:
@@ -255,7 +255,7 @@ gateway:
       value: http://tracing-server:9411
 config:
   enabled: true
-  replicaCount: 1
+  replicaCount: 0
   podAnnotations:
     helm.sh/hook-weight: "-10" # Triển khai đầu tiên
   livenessProbe:
@@ -294,7 +294,7 @@ config:
       value: http://discovery-server:8761/eureka/
 discovery:
   enabled: true
-  replicaCount: 1
+  replicaCount: 0
   podAnnotations:
     helm.sh/hook-weight: "-5" # Triển khai thứ hai
   livenessProbe:
@@ -341,7 +341,7 @@ discovery:
       value: http://tracing-server:9411
 tracing:
   enabled: true
-  replicaCount: 1
+  replicaCount: 0
   podAnnotations:
     helm.sh/hook-weight: "0" # Triển khai trước các service thông thường
   fullnameOverride: tracing-server
