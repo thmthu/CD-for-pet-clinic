@@ -19,7 +19,7 @@ visits:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 customers:
   enabled: true
   replicaCount: 0
@@ -60,7 +60,7 @@ customers:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 vets:
   enabled: true
   replicaCount: 0
@@ -101,7 +101,7 @@ vets:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 admin:
   enabled: true
   replicaCount: 0
@@ -132,7 +132,7 @@ admin:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 gateway:
   enabled: true
   replicaCount: 0
@@ -165,7 +165,7 @@ gateway:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 config:
   enabled: true
   replicaCount: 0
@@ -205,7 +205,7 @@ discovery:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 tracing:
   enabled: true
   replicaCount: 0
@@ -229,7 +229,7 @@ tracing:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 spring-petclinic-vets-service:
   image:
     tag: v1.0.4

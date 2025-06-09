@@ -44,7 +44,7 @@ visits:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 customers:
   enabled: true
   replicaCount: 0
@@ -91,7 +91,7 @@ customers:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 vets:
   enabled: true
   replicaCount: 0
@@ -138,7 +138,7 @@ vets:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 admin:
   enabled: true
   replicaCount: 0
@@ -194,7 +194,7 @@ admin:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 gateway:
   enabled: true
   replicaCount: 0
@@ -252,7 +252,7 @@ gateway:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 config:
   enabled: true
   replicaCount: 0
@@ -338,48 +338,4 @@ discovery:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
-tracing:
-  enabled: true
-  replicaCount: 0
-  podAnnotations:
-    helm.sh/hook-weight: "0" # Triển khai trước các service thông thường
-  fullnameOverride: tracing-server
-  image:
-    repository: openzipkin/zipkin
-    pullPolicy: Always
-    tag: "latest"
-  service:
-    type: ClusterIP
-    port: 9411
-  ingress:
-    enabled: false
-  env:
-    - name: SPRING_PROFILES_ACTIVE
-      value: kubernetes
-    - name: EUREKA_INSTANCE_HOSTNAME
-      value: tracing-server
-    - name: CONFIG_SERVER_URL
-      value: http://config-server:8888
-    - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-      value: http://discovery-server:8761/eureka/
-    - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
-spring-petclinic-customers-service:
-  image:
-    tag: a1a2ac7
-spring-petclinic-vets-service:
-  image:
-    tag: 8db9fd1
-spring-petclinic-api-gateway:
-  image:
-    tag: 6ca5c46
-spring-petclinic-genai-service:
-  image:
-    tag: "1718976"
-spring-petclinic-visits-service:
-  image:
-    tag: db73334
-spring-petclinic-config-server:
-  image:
-    tag: 8d5b73f
+      value: http://zipkin.observability.svc.cluster.local:80

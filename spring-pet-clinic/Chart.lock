@@ -20,8 +20,5 @@ dependencies:
 - name: service-common
   repository: file://../service-common
   version: 0.1.0
-- name: service-common
-  repository: file://../service-common
-  version: 0.1.0
-digest: sha256:ae5083d21a3f47a2c9f0af725838a607cca4297b9808e0526004358f2f939171
-generated: "2025-05-23T10:31:59.5672258+07:00"
+digest: sha256:77c518a47293e22dc57de0c0c5196060391028c752c569bc07d60aff75b6648c
+generated: "2025-06-09T14:32:38.456480657Z"

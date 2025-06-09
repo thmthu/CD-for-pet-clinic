@@ -49,7 +49,7 @@ visits:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 
 customers:
   enabled: true
@@ -102,7 +102,7 @@ customers:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 
 vets:
   enabled: true
@@ -155,7 +155,7 @@ vets:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 
 admin:
   enabled: true
@@ -217,7 +217,7 @@ admin:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 
 gateway:
   enabled: true
@@ -281,7 +281,7 @@ gateway:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 
 config:
   enabled: true
@@ -374,7 +374,7 @@ discovery:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
 
 tracing:
   enabled: true
@@ -401,4 +401,4 @@ tracing:
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
-      value: http://tracing-server:9411
+      value: http://zipkin.observability.svc.cluster.local:80
