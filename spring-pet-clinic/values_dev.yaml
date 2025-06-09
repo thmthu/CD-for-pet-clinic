@@ -374,3 +374,6 @@ spring-petclinic-vets-service:
 spring-petclinic-api-gateway:
   image:
     tag: 6ca5c46
+spring-petclinic-genai-service:
+  image:
+    tag: "1718976"
