@@ -341,7 +341,7 @@ discovery:
       value: http://zipkin.observability.svc.cluster.local:80
 spring-petclinic-customers-service:
   image:
-    tag: 5f34c7d
+    tag: 9618f4a
 spring-petclinic-vets-service:
   image:
     tag: a579d52
