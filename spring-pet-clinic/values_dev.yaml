@@ -272,8 +272,6 @@ gateway:
             pathType: ImplementationSpecific
     tls: []
   env:
-    - name: SPRING_PROFILES_ACTIVE
-      value: kubernetes
     - name: EUREKA_INSTANCE_HOSTNAME
       value: api-gateway
     - name: CONFIG_SERVER_URL
