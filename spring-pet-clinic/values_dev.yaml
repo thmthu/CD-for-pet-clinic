@@ -373,15 +373,3 @@ discovery:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://zipkin.observability.svc.cluster.local:80
-spring-petclinic-customers-service:
-  image:
-    tag: a44e2b4
-spring-petclinic-vets-service:
-  image:
-    tag: a579d52
-spring-petclinic-visits-service:
-  image:
-    tag: a579d52
-spring-petclinic-config-server:
-  image:
-    tag: 035823c
