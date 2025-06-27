@@ -2,7 +2,7 @@ visits:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "10"  # Triển khai sau các service cơ bản
+    helm.sh/hook-weight: "10" # Triển khai sau các service cơ bản
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -25,12 +25,7 @@ visits:
   initContainers:
     - name: wait-for-dependencies
       image: busybox:1.28
-      command: ['sh', '-c', 
-        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
-          echo "Waiting for config-server and discovery-server"; 
-          sleep 10; 
-        done;'
-      ]
+      command: ['sh', '-c', 'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do echo "Waiting for config-server and discovery-server"; sleep 10; done;']
   fullnameOverride: visits-service
   image:
     repository: mytruong28022004/spring-petclinic-visits-service
@@ -50,12 +45,11 @@ visits:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://zipkin.observability.svc.cluster.local:80
-
 customers:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "10"  # Triển khai sau các service cơ bản
+    helm.sh/hook-weight: "10" # Triển khai sau các service cơ bản
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -78,12 +72,7 @@ customers:
   initContainers:
     - name: wait-for-dependencies
       image: busybox:1.28
-      command: ['sh', '-c', 
-        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
-          echo "Waiting for config-server and discovery-server"; 
-          sleep 10; 
-        done;'
-      ]
+      command: ['sh', '-c', 'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do echo "Waiting for config-server and discovery-server"; sleep 10; done;']
   fullnameOverride: customers-service
   image:
     repository: mytruong28022004/spring-petclinic-customers-service
@@ -103,12 +92,11 @@ customers:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://zipkin.observability.svc.cluster.local:80
-
 vets:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "10"  # Triển khai sau các service cơ bản
+    helm.sh/hook-weight: "10" # Triển khai sau các service cơ bản
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -131,17 +119,12 @@ vets:
   initContainers:
     - name: wait-for-dependencies
       image: busybox:1.28
-      command: ['sh', '-c', 
-        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
-          echo "Waiting for config-server and discovery-server"; 
-          sleep 10; 
-        done;'
-      ]
+      command: ['sh', '-c', 'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do echo "Waiting for config-server and discovery-server"; sleep 10; done;']
   fullnameOverride: vets-service
   image:
     repository: mytruong28022004/spring-petclinic-vets-service
     pullPolicy: Always
-    tag: "latest"
+    tag: "v1.0.8"
   service:
     type: ClusterIP
     port: 8083
@@ -156,12 +139,11 @@ vets:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://zipkin.observability.svc.cluster.local:80
-
 admin:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "15"  # Triển khai sau các service khác
+    helm.sh/hook-weight: "15" # Triển khai sau các service khác
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -184,12 +166,7 @@ admin:
   initContainers:
     - name: wait-for-dependencies
       image: busybox:1.28
-      command: ['sh', '-c', 
-        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
-          echo "Waiting for config-server and discovery-server"; 
-          sleep 10; 
-        done;'
-      ]
+      command: ['sh', '-c', 'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do echo "Waiting for config-server and discovery-server"; sleep 10; done;']
   fullnameOverride: admin-server
   image:
     repository: mytruong28022004/spring-petclinic-admin-server
@@ -218,12 +195,11 @@ admin:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://zipkin.observability.svc.cluster.local:80
-
 gateway:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "10"  # Triển khai sau các service cơ bản
+    helm.sh/hook-weight: "10" # Triển khai sau các service cơ bản
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -246,12 +222,7 @@ gateway:
   initContainers:
     - name: wait-for-dependencies
       image: busybox:1.28
-      command: ['sh', '-c', 
-        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
-          echo "Waiting for config-server and discovery-server"; 
-          sleep 10; 
-        done;'
-      ]
+      command: ['sh', '-c', 'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do echo "Waiting for config-server and discovery-server"; sleep 10; done;']
   fullnameOverride: api-gateway
   image:
     repository: mytruong28022004/spring-petclinic-api-gateway
@@ -280,12 +251,11 @@ gateway:
       value: http://discovery-server:8761/eureka/
     - name: SPRING_ZIPKIN_BASE_URL
       value: http://zipkin.observability.svc.cluster.local:80
-
 config:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "-10"  # Triển khai đầu tiên
+    helm.sh/hook-weight: "-10" # Triển khai đầu tiên
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -320,12 +290,11 @@ config:
       value: config-server
     - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
       value: http://discovery-server:8761/eureka/
-
 discovery:
   enabled: true
   replicaCount: 1
   podAnnotations:
-    helm.sh/hook-weight: "-5"  # Triển khai thứ hai
+    helm.sh/hook-weight: "-5" # Triển khai thứ hai
   livenessProbe:
     httpGet:
       path: /actuator/health
@@ -348,12 +317,7 @@ discovery:
   initContainers:
     - name: wait-for-config
       image: busybox:1.28
-      command: ['sh', '-c', 
-        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1; do 
-          echo "Waiting for config-server"; 
-          sleep 10; 
-        done;'
-      ]
+      command: ['sh', '-c', 'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1; do echo "Waiting for config-server"; sleep 10; done;']
   fullnameOverride: discovery-server
   image:
     repository: mytruong28022004/spring-petclinic-discovery-server
