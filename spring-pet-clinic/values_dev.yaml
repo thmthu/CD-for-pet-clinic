@@ -279,7 +279,7 @@ config:
   image:
     repository: mytruong28022004/spring-petclinic-config-server
     pullPolicy: Always
-    tag: "7ec92eb"
+    tag: "18e886b"
   service:
     type: ClusterIP
     port: 8888
