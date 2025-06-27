@@ -124,7 +124,7 @@ vets:
   image:
     repository: mytruong28022004/spring-petclinic-vets-service
     pullPolicy: Always
-    tag: "5b2326d"
+    tag: "94ea519"
   service:
     type: ClusterIP
     port: 8083
