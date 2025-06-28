@@ -30,7 +30,7 @@ visits:
   image:
     repository: mytruong28022004/spring-petclinic-visits-service
     pullPolicy: Always
-    tag: "5b2326d"
+    tag: "188959b"
   service:
     type: ClusterIP
     port: 8082
