@@ -144,7 +144,7 @@ pipeline {
     stage('Show Cleanup Link') {
       steps {
         script {
-          def deleteJobUrl = "${env.JENKINS_URL}/job/delete-deployment/build?token=delete-token&RELEASE_NAME=${params.RELEASE_NAME}&NAMESPACE=dev-${env.COMMIT}"
+          def deleteJobUrl = "${env.JENKINS_URL}job/delete-deployment/parambuild/?RELEASE_NAME=${params.RELEASE_NAME}&NAMESPACE=dev-${env.COMMIT}"
           echo "Click here to delete the deployed release:"
           echo "<a href='${deleteJobUrl}'>Delete this release</a>"
           currentBuild.description += "<br><a href='${deleteJobUrl}'>[Click to delete release ${params.RELEASE_NAME}]</a>"
