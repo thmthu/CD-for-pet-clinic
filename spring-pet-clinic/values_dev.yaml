@@ -77,7 +77,7 @@ customers:
   image:
     repository: mytruong28022004/spring-petclinic-customers-service
     pullPolicy: Always
-    tag: "83f2d19"
+    tag: "1d8205d"
   service:
     type: ClusterIP
     port: 8081
